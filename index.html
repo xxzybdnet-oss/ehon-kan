@@ -290,22 +290,83 @@
       number: 2,
       title: "筆箱と三羽の小鳥と六歳の土曜日",
       cover: "https://cdn.pagepop.top/gcs/ai/gpt_image2/56592648/1785305371539_56592648_IG6Sn.png",
-      link: "https://xxzybdnet-oss.github.io/ehon-kan/筆箱と三羽の小鳥と六歳の土曜日.html"
+      link: "https://xxzybdnet-oss.github.io/ehon-kan/筆箱と三羽の小鳥と六歳の土曜日.html".normalize('NFD')
     },
 
     {
       number: 3,
       title: "夏休みのふつうの週末",
       cover: "https://cdn.pagepop.top/gcs/ai/gpt_image2/55856026/1785284158215_55856026_mLrlL.png",
-      link: "https://xxzybdnet-oss.github.io/ehon-kan/夏休みのふつうの週末.html"
+      link: "https://xxzybdnet-oss.github.io/ehon-kan/夏休みのふつうの週末.html".normalize('NFD')
     },
 
-    // ↓ ここから先はサンプルです。実際の絵本情報に書き換えて、
-    //   必要な分だけコピーして増やしてください（60冊まで自由に）。
-    { number: 4, title: "（タイトルをここに）", cover: "", link: "#" },
-    { number: 4, title: "（タイトルをここに）", cover: "", link: "#" },
-    { number: 5, title: "（タイトルをここに）", cover: "", link: "#" },
-    { number: 6, title: "（タイトルをここに）", cover: "", link: "#" },
+    {
+      number: 4,
+      title: "LOVOT、折紙、刀削麺と、六歳の横浜たんけん",
+      cover: "https://cdn.pagepop.top/gcs/ai/gpt_image2/55936696/1785378541953_55936696_q2eJZ.png",
+      link: "https://xxzybdnet-oss.github.io/ehon-kan/LOVOT、折紙、刀削麺と、六歳の横浜たんけん.html".normalize('NFD')
+    },
+    {
+      number: 5,
+      title: "せかい君の道が、少し長くなる日",
+      cover: "https://cdn.pagepop.top/gcs/ai/gpt_image2/56366033/1785383701435_56366033_Aq7kt.png",
+      link: "https://xxzybdnet-oss.github.io/ehon-kan/せかい君の道が、少し長くなる日.html".normalize('NFD')
+    },
+    {
+      number: 6,
+      title: "ひらいていく子ども",
+      cover: "https://cdn.pagepop.top/gcs/ai/gpt_image2/56592648/1785382492640_56592648_EiWxi.png",
+      link: "https://xxzybdnet-oss.github.io/ehon-kan/ひらいていく子ども.html".normalize('NFD')
+    },
+    {
+      number: 7,
+      title: "ボールがつまった日",
+      cover: "https://cdn.pagepop.top/gcs/ai/gpt_image2/56592648/1785212213051_56592648_WE3kG.png",
+      link: "https://xxzybdnet-oss.github.io/ehon-kan/ボールがつまった日.html".normalize('NFD')
+    },
+    {
+      number: 8,
+      title: "ママはどうして泣くの？",
+      cover: "https://cdn.pagepop.top/gcs/ai/gpt_image2/56366033/1785385463358_56366033_ITJRC.png",
+      link: "https://xxzybdnet-oss.github.io/ehon-kan/ママはどうして泣くの？.html".normalize('NFD')
+    },
+    {
+      number: 9,
+      title: "今日のちいさな成長",
+      cover: "https://cdn.pagepop.top/gcs/ai/gpt_image2/55856026/1785385878465_55856026_D0zEf.png",
+      coverPos: "left center",
+      link: "https://xxzybdnet-oss.github.io/ehon-kan/今日のちいさな成長.html".normalize('NFD')
+    },
+    {
+      number: 10,
+      title: "七月の再会",
+      cover: "https://cdn.pagepop.top/gcs/ai/gpt_image2/55856026/1785386137271_55856026_IvmHr.png",
+      link: "https://xxzybdnet-oss.github.io/ehon-kan/七月の再会.html".normalize('NFD')
+    },
+    {
+      number: 11,
+      title: "折纸、地震和小青虫",
+      cover: "https://cdn.pagepop.top/gcs/ai/gpt_image2/56366033/1785212178232_56366033_H3S0C.png",
+      link: "https://xxzybdnet-oss.github.io/ehon-kan/折纸、地震和小青虫.html".normalize('NFD')
+    },
+    {
+      number: 12,
+      title: "遅れた７ふん",
+      cover: "https://cdn.pagepop.top/gcs/ai/gpt_image2/56366033/1785207147164_56366033_Q4mza.png",
+      link: "https://xxzybdnet-oss.github.io/ehon-kan/遅れた７ふん.html".normalize('NFD')
+    },
+    {
+      number: 13,
+      title: "宝石店、八十万と、六歳の寝る前のゆめ",
+      cover: "https://cdn.pagepop.top/gcs/ai/gpt_image2/56366033/1785283860850_56366033_umT2d.png",
+      link: "https://xxzybdnet-oss.github.io/ehon-kan/宝石店、八十万と、六歳の寝る前のゆめ.html".normalize('NFD')
+    },
+    {
+      number: 14,
+      title: "連休のさざなみ",
+      cover: "https://cdn.pagepop.top/gcs/ai/gpt_image2/55936696/1785385552383_55936696_RAEyt.png",
+      link: "https://xxzybdnet-oss.github.io/ehon-kan/連休のさざなみ.html".normalize('NFD')
+    },
   ];
 
   const grid = document.getElementById('grid');
@@ -325,7 +386,7 @@
       }
 
       const coverInner = book.cover
-        ? `<img src="${book.cover}" alt="${book.title}の表紙" loading="lazy">`
+        ? `<img src="${book.cover}" alt="${book.title}の表紙" loading="lazy" style="object-position:${book.coverPos || 'center'};">`
         : `<div class="cover-placeholder">${book.title}</div>`;
 
       a.innerHTML = `
