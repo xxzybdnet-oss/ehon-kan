@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ボールがつまった日</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper: #EAE3D4;
+    --paper-deep: #DED4BF;
+    --ink: #26221C;
+    --indigo: #2B4570;
+    --indigo-deep: #1C2E4A;
+    --persimmon: #D96C3F;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body{
+    margin:0;
+    background:
+      radial-gradient(circle at 15% 6%, rgba(201,162,75,0.10), transparent 40%),
+      radial-gradient(circle at 85% 92%, rgba(43,69,112,0.08), transparent 45%),
+      var(--paper);
+    color: var(--ink);
+    font-family: 'Zen Kaku Gothic New', 'Hiragino Sans', sans-serif;
+  }
+
+  header{
+    text-align:center;
+    padding: 4.2rem 6vw 3rem;
+    border-bottom: 1px solid rgba(38,34,28,0.12);
+  }
+  .eyebrow{
+    font-size:0.75rem;
+    letter-spacing:0.32em;
+    color: var(--indigo);
+    text-transform: uppercase;
+    font-weight:700;
+    margin:0 0 1rem;
+  }
+  h1{
+    font-family:'Shippori Mincho', serif;
+    font-weight:700;
+    font-size: clamp(2rem, 5.5vw, 3.4rem);
+    margin:0 0 0.6rem;
+  }
+  .sub{
+    color: rgba(38,34,28,0.6);
+    font-size:0.95rem;
+    margin:0;
+  }
+  .progress{
+    position: sticky;
+    top:0;
+    z-index: 5;
+    background: rgba(234,227,212,0.88);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid rgba(38,34,28,0.1);
+    padding: 0.55rem 0;
+    text-align:center;
+    font-size:0.72rem;
+    letter-spacing:0.1em;
+    color: var(--indigo-deep);
+  }
+  #progressFill{
+    color: var(--persimmon);
+    font-family:'Shippori Mincho', serif;
+    font-weight:700;
+  }
+
+  main{
+    max-width: clamp(360px, 78vw, 1200px);
+    margin: 0 auto;
+    padding: 3rem 5vw 6rem;
+    display:flex;
+    flex-direction: column;
+    gap: 3.4rem;
+  }
+
+  .page{
+    scroll-margin-top: 4rem;
+  }
+  .tag{
+    display:flex;
+    align-items:center;
+    gap:0.7rem;
+    margin-bottom:0.8rem;
+  }
+  .tag .num{
+    font-family:'Shippori Mincho', serif;
+    font-weight:700;
+    color: var(--persimmon);
+    font-size:1rem;
+    min-width: 2.4rem;
+  }
+  .tag .label{
+    font-size:0.82rem;
+    color: rgba(38,34,28,0.65);
+    letter-spacing:0.03em;
+  }
+  .frame{
+    border-radius: 6px;
+    overflow:hidden;
+    box-shadow:
+      0 14px 28px -16px rgba(28,46,74,0.4),
+      0 3px 8px rgba(28,46,74,0.15);
+    background: linear-gradient(160deg, var(--indigo), var(--indigo-deep));
+  }
+  .frame img{
+    width:100%;
+    display:block;
+  }
+  .cover .frame{
+    box-shadow:
+      0 22px 40px -18px rgba(28,46,74,0.5),
+      0 4px 10px rgba(28,46,74,0.2);
+  }
+  .cover .tag .label, .backcover .tag .label{
+    color: var(--indigo-deep);
+    font-weight:700;
+  }
+  .backcover .frame img{
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    object-position: top;
+  }
+
+  footer{
+    text-align:center;
+    padding: 3rem 6vw 4rem;
+    color: rgba(38,34,28,0.45);
+    font-size:0.78rem;
+    letter-spacing:0.04em;
+    border-top: 1px solid rgba(38,34,28,0.1);
+  }
+
+  #toTop{
+    position: fixed;
+    right: 1.4rem;
+    bottom: 1.4rem;
+    width: 2.6rem;
+    height: 2.6rem;
+    border-radius: 50%;
+    background: var(--indigo);
+    color: var(--paper);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-decoration:none;
+    font-size:1.1rem;
+    box-shadow: 0 8px 18px -6px rgba(28,46,74,0.5);
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    pointer-events: none;
+  }
+  #toTop.show{ opacity:1; transform:translateY(0); pointer-events:auto; }
+</style>
+</head>
+<body>
+
+<div class="progress">
+  <span id="progressFill">0</span> / <span id="progressTotal">0</span> ページ
+</div>
+
+<header>
+  <p class="eyebrow">Picture Book</p>
+  <h1>ボールがつまった日</h1>
+  <p class="sub">せかい君とママの物語</p>
+</header>
+
+<main id="main"></main>
+
+<footer id="siteFooter">© 2026 せかい君とママの世界</footer>
+
+<a href="#top" id="toTop" aria-label="トップへ戻る">↑</a>
+
+<script>
+  const pages = [
+    {
+        "type": "cover",
+        "caption": "表紙",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/56592648/1785212213051_56592648_WE3kG.png"
+    },
+    {
+        "type": "page",
+        "num": 1,
+        "caption": "Big Boy餐厅生日场景",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/56592648/1785146427539_56592648_P86o5.png"
+    },
+    {
+        "type": "page",
+        "num": 2,
+        "caption": "平板搞怪自拍",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/56592648/1785146485648_56592648_PJOB4.png"
+    },
+    {
+        "type": "page",
+        "num": 3,
+        "caption": "巧克力芭菲和生日毛巾",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/56592648/1785146544025_56592648_xXKNI.png"
+    },
+    {
+        "type": "page",
+        "num": 4,
+        "caption": "公园入口抛球",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/56592648/1783911812276_56592648_LysFR.png"
+    },
+    {
+        "type": "page",
+        "num": 5,
+        "caption": "球被抛起问高度",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/56592648/1783993300949_56592648_a3Fze.png"
+    },
+    {
+        "type": "page",
+        "num": 6,
+        "caption": "球卡在木架和黑布之间",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/56592648/1783993454354_56592648_ySvAw.png"
+    },
+    {
+        "type": "page",
+        "num": 7,
+        "caption": "跳起来够球差一点",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/56592648/1783993534784_56592648_jaVeX.png"
+    },
+    {
+        "type": "page",
+        "num": 8,
+        "caption": "找树枝",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/56592648/1783993615464_56592648_og0zr.png"
+    },
+    {
+        "type": "page",
+        "num": 9,
+        "caption": "用树枝把球弄下来",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/56592648/1783993698083_56592648_XuAOT.png"
+    },
+    {
+        "type": "page",
+        "num": 10,
+        "caption": "提议重演困难",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/56592648/1784113726755_56592648_IfkWV.png"
+    },
+    {
+        "type": "page",
+        "num": 11,
+        "caption": "终于再次卡住",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/56592648/1784113804952_56592648_QYIBf.png"
+    },
+    {
+        "type": "page",
+        "num": 12,
+        "caption": "拍照记录全过程",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/56592648/1784113886075_56592648_tjpf8.png"
+    },
+    {
+        "type": "page",
+        "num": 13,
+        "caption": "长椅休息看照片",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/56592648/1784114156572_56592648_x544N.png"
+    },
+    {
+        "type": "page",
+        "num": 14,
+        "caption": "篮球教室说可以看最后比赛",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/56592648/1784114260679_56592648_bhKhz.png"
+    },
+    {
+        "type": "page",
+        "num": 15,
+        "caption": "比赛场景，妈妈在场边观看",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/56592648/1784631395054_56592648_J0EhO.png"
+    },
+    {
+        "type": "page",
+        "num": 16,
+        "caption": "回家路上的傍晚",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/56592648/1784631453919_56592648_ovKIT.png"
+    },
+    {
+        "type": "back",
+        "caption": "裏表紙",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/56592648/1785212301674_56592648_jZoYN.png"
+    }
+];
+
+  const main = document.getElementById('main');
+
+  pages.forEach((p, i) => {
+    const sec = document.createElement('section');
+    sec.className = 'page' + (p.type === 'cover' ? ' cover' : p.type === 'back' ? ' backcover' : '');
+    if (i === 0) sec.id = 'top';
+
+    let labelText;
+    if (p.type === 'cover') labelText = '\ud83c\udf1f 表紙' + (p.caption ? ' ' + p.caption : '');
+    else if (p.type === 'back') labelText = '\ud83c\udf1f 裏表紙' + (p.caption ? ' ' + p.caption : '');
+    else labelText = `\ud83d\udcd6 P${p.num}` + (p.caption ? ' ' + p.caption : '');
+
+    const numLabel = p.type === 'page' ? String(p.num).padStart(2, '0') : (p.type === 'cover' ? '★' : '☆');
+
+    sec.innerHTML = `
+      <div class="tag"><span class="num">${numLabel}</span><span class="label">${labelText}</span></div>
+      <div class="frame"><img src="${p.src}" alt="${labelText}" loading="lazy"></div>
+    `;
+    main.appendChild(sec);
+  });
+
+  document.getElementById('progressTotal').textContent = pages.length;
+
+  const sections = Array.from(document.querySelectorAll('.page'));
+  const progressFill = document.getElementById('progressFill');
+  const toTop = document.getElementById('toTop');
+
+  function updateProgress(){
+    let current = 1;
+    for (let i = 0; i < sections.length; i++){
+      const rect = sections[i].getBoundingClientRect();
+      if (rect.top < window.innerHeight * 0.5) current = i + 1;
+    }
+    progressFill.textContent = current;
+    toTop.classList.toggle('show', window.scrollY > 400);
+  }
+  document.addEventListener('scroll', updateProgress, { passive: true });
+  updateProgress();
+</script>
+
+</body>
+</html>

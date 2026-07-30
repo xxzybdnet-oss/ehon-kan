@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LOVOT、折紙、刀削麺と、六歳の横浜たんけん</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper: #EAE3D4;
+    --paper-deep: #DED4BF;
+    --ink: #26221C;
+    --indigo: #2B4570;
+    --indigo-deep: #1C2E4A;
+    --persimmon: #D96C3F;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body{
+    margin:0;
+    background:
+      radial-gradient(circle at 15% 6%, rgba(201,162,75,0.10), transparent 40%),
+      radial-gradient(circle at 85% 92%, rgba(43,69,112,0.08), transparent 45%),
+      var(--paper);
+    color: var(--ink);
+    font-family: 'Zen Kaku Gothic New', 'Hiragino Sans', sans-serif;
+  }
+
+  header{
+    text-align:center;
+    padding: 4.2rem 6vw 3rem;
+    border-bottom: 1px solid rgba(38,34,28,0.12);
+  }
+  .eyebrow{
+    font-size:0.75rem;
+    letter-spacing:0.32em;
+    color: var(--indigo);
+    text-transform: uppercase;
+    font-weight:700;
+    margin:0 0 1rem;
+  }
+  h1{
+    font-family:'Shippori Mincho', serif;
+    font-weight:700;
+    font-size: clamp(2rem, 5.5vw, 3.4rem);
+    margin:0 0 0.6rem;
+  }
+  .sub{
+    color: rgba(38,34,28,0.6);
+    font-size:0.95rem;
+    margin:0;
+  }
+  .progress{
+    position: sticky;
+    top:0;
+    z-index: 5;
+    background: rgba(234,227,212,0.88);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid rgba(38,34,28,0.1);
+    padding: 0.55rem 0;
+    text-align:center;
+    font-size:0.72rem;
+    letter-spacing:0.1em;
+    color: var(--indigo-deep);
+  }
+  #progressFill{
+    color: var(--persimmon);
+    font-family:'Shippori Mincho', serif;
+    font-weight:700;
+  }
+
+  main{
+    max-width: clamp(360px, 78vw, 1200px);
+    margin: 0 auto;
+    padding: 3rem 5vw 6rem;
+    display:flex;
+    flex-direction: column;
+    gap: 3.4rem;
+  }
+
+  .page{
+    scroll-margin-top: 4rem;
+  }
+  .tag{
+    display:flex;
+    align-items:center;
+    gap:0.7rem;
+    margin-bottom:0.8rem;
+  }
+  .tag .num{
+    font-family:'Shippori Mincho', serif;
+    font-weight:700;
+    color: var(--persimmon);
+    font-size:1rem;
+    min-width: 2.4rem;
+  }
+  .tag .label{
+    font-size:0.82rem;
+    color: rgba(38,34,28,0.65);
+    letter-spacing:0.03em;
+  }
+  .frame{
+    border-radius: 6px;
+    overflow:hidden;
+    box-shadow:
+      0 14px 28px -16px rgba(28,46,74,0.4),
+      0 3px 8px rgba(28,46,74,0.15);
+    background: linear-gradient(160deg, var(--indigo), var(--indigo-deep));
+  }
+  .frame img{
+    width:100%;
+    display:block;
+  }
+  .cover .frame{
+    box-shadow:
+      0 22px 40px -18px rgba(28,46,74,0.5),
+      0 4px 10px rgba(28,46,74,0.2);
+  }
+  .cover .tag .label, .backcover .tag .label{
+    color: var(--indigo-deep);
+    font-weight:700;
+  }
+  .backcover .frame img{
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    object-position: top;
+  }
+
+  footer{
+    text-align:center;
+    padding: 3rem 6vw 4rem;
+    color: rgba(38,34,28,0.45);
+    font-size:0.78rem;
+    letter-spacing:0.04em;
+    border-top: 1px solid rgba(38,34,28,0.1);
+  }
+
+  #toTop{
+    position: fixed;
+    right: 1.4rem;
+    bottom: 1.4rem;
+    width: 2.6rem;
+    height: 2.6rem;
+    border-radius: 50%;
+    background: var(--indigo);
+    color: var(--paper);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-decoration:none;
+    font-size:1.1rem;
+    box-shadow: 0 8px 18px -6px rgba(28,46,74,0.5);
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    pointer-events: none;
+  }
+  #toTop.show{ opacity:1; transform:translateY(0); pointer-events:auto; }
+</style>
+</head>
+<body>
+
+<div class="progress">
+  <span id="progressFill">0</span> / <span id="progressTotal">0</span> ページ
+</div>
+
+<header>
+  <p class="eyebrow">Picture Book</p>
+  <h1>LOVOT、折紙、刀削麺と、六歳の横浜たんけん</h1>
+  <p class="sub">せかい君とママの物語</p>
+</header>
+
+<main id="main"></main>
+
+<footer id="siteFooter">© 2026 せかい君とママの世界</footer>
+
+<a href="#top" id="toTop" aria-label="トップへ戻る">↑</a>
+
+<script>
+  const pages = [
+    {
+        "type": "cover",
+        "caption": "表紙",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/55936696/1785378541953_55936696_q2eJZ.png"
+    },
+    {
+        "type": "page",
+        "num": 1,
+        "caption": "朝１０時、出発",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/55936696/1783821897671_55936696_Cuxwk.png"
+    },
+    {
+        "type": "page",
+        "num": 2,
+        "caption": "南武線から京浜東北線へ",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/55936696/1783825094462_55936696_uePe3.png"
+    },
+    {
+        "type": "page",
+        "num": 3,
+        "caption": "高島屋の案内板",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/55936696/1783905449775_55936696_3IwyQ.png"
+    },
+    {
+        "type": "page",
+        "num": 4,
+        "caption": "おもちゃ売り場のLOVOT跡地",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/55936696/1783905460845_55936696_a4Yqm.png"
+    },
+    {
+        "type": "page",
+        "num": 5,
+        "caption": "MARK ISのLOVOT店",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/55936696/1783905445973_55936696_vQEu6.png"
+    },
+    {
+        "type": "page",
+        "num": 6,
+        "caption": "ぬまれを抱っこ",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/55936696/1783905443054_55936696_byG8P.png"
+    },
+    {
+        "type": "page",
+        "num": 7,
+        "caption": "充電のベッド",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/55936696/1783905444760_55936696_IFphT.png"
+    },
+    {
+        "type": "page",
+        "num": 8,
+        "caption": "LOVOTと暮らす家の話",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/55936696/1784974671932_55936696_4M1CX.png"
+    },
+    {
+        "type": "page",
+        "num": 9,
+        "caption": "バナナコースター",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/55936696/1783993155959_55936696_BJQqT.png"
+    },
+    {
+        "type": "page",
+        "num": 10,
+        "caption": "過山車俯冲",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/55936696/1783993160445_55936696_iwdFj.png"
+    },
+    {
+        "type": "page",
+        "num": 11,
+        "caption": "日本丸の甲板",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/55936696/1783993154376_55936696_exAnv.png"
+    },
+    {
+        "type": "page",
+        "num": 12,
+        "caption": "船内のチャイム",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/55936696/1783993153972_55936696_kLWKX.png"
+    },
+    {
+        "type": "page",
+        "num": 13,
+        "caption": "むずかしい折り紙",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/55936696/1784113769243_55936696_wFolO.png"
+    },
+    {
+        "type": "page",
+        "num": 14,
+        "caption": "紙船の完成",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/55936696/1784113778744_55936696_kO0Gs.png"
+    },
+    {
+        "type": "page",
+        "num": 15,
+        "caption": "ランドマーク前の大道芸",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/55936696/1784113778558_55936696_QxZ1m.png"
+    },
+    {
+        "type": "page",
+        "num": 16,
+        "caption": "西安刀削麺で夕食",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/55936696/1784113777341_55936696_gLDhv.png"
+    },
+    {
+        "type": "page",
+        "num": 17,
+        "caption": "帰りの電車",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/55936696/1784113780252_55936696_DYTGM.png"
+    }
+];
+
+  const main = document.getElementById('main');
+
+  pages.forEach((p, i) => {
+    const sec = document.createElement('section');
+    sec.className = 'page' + (p.type === 'cover' ? ' cover' : p.type === 'back' ? ' backcover' : '');
+    if (i === 0) sec.id = 'top';
+
+    let labelText;
+    if (p.type === 'cover') labelText = '\ud83c\udf1f 表紙' + (p.caption ? ' ' + p.caption : '');
+    else if (p.type === 'back') labelText = '\ud83c\udf1f 裏表紙' + (p.caption ? ' ' + p.caption : '');
+    else labelText = `\ud83d\udcd6 P${p.num}` + (p.caption ? ' ' + p.caption : '');
+
+    const numLabel = p.type === 'page' ? String(p.num).padStart(2, '0') : (p.type === 'cover' ? '★' : '☆');
+
+    sec.innerHTML = `
+      <div class="tag"><span class="num">${numLabel}</span><span class="label">${labelText}</span></div>
+      <div class="frame"><img src="${p.src}" alt="${labelText}" loading="lazy"></div>
+    `;
+    main.appendChild(sec);
+  });
+
+  document.getElementById('progressTotal').textContent = pages.length;
+
+  const sections = Array.from(document.querySelectorAll('.page'));
+  const progressFill = document.getElementById('progressFill');
+  const toTop = document.getElementById('toTop');
+
+  function updateProgress(){
+    let current = 1;
+    for (let i = 0; i < sections.length; i++){
+      const rect = sections[i].getBoundingClientRect();
+      if (rect.top < window.innerHeight * 0.5) current = i + 1;
+    }
+    progressFill.textContent = current;
+    toTop.classList.toggle('show', window.scrollY > 400);
+  }
+  document.addEventListener('scroll', updateProgress, { passive: true });
+  updateProgress();
+</script>
+
+</body>
+</html>

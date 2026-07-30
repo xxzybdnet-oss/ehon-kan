@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>遅れた７ふん</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper: #EAE3D4;
+    --paper-deep: #DED4BF;
+    --ink: #26221C;
+    --indigo: #2B4570;
+    --indigo-deep: #1C2E4A;
+    --persimmon: #D96C3F;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body{
+    margin:0;
+    background:
+      radial-gradient(circle at 15% 6%, rgba(201,162,75,0.10), transparent 40%),
+      radial-gradient(circle at 85% 92%, rgba(43,69,112,0.08), transparent 45%),
+      var(--paper);
+    color: var(--ink);
+    font-family: 'Zen Kaku Gothic New', 'Hiragino Sans', sans-serif;
+  }
+
+  header{
+    text-align:center;
+    padding: 4.2rem 6vw 3rem;
+    border-bottom: 1px solid rgba(38,34,28,0.12);
+  }
+  .eyebrow{
+    font-size:0.75rem;
+    letter-spacing:0.32em;
+    color: var(--indigo);
+    text-transform: uppercase;
+    font-weight:700;
+    margin:0 0 1rem;
+  }
+  h1{
+    font-family:'Shippori Mincho', serif;
+    font-weight:700;
+    font-size: clamp(2rem, 5.5vw, 3.4rem);
+    margin:0 0 0.6rem;
+  }
+  .sub{
+    color: rgba(38,34,28,0.6);
+    font-size:0.95rem;
+    margin:0;
+  }
+  .progress{
+    position: sticky;
+    top:0;
+    z-index: 5;
+    background: rgba(234,227,212,0.88);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid rgba(38,34,28,0.1);
+    padding: 0.55rem 0;
+    text-align:center;
+    font-size:0.72rem;
+    letter-spacing:0.1em;
+    color: var(--indigo-deep);
+  }
+  #progressFill{
+    color: var(--persimmon);
+    font-family:'Shippori Mincho', serif;
+    font-weight:700;
+  }
+
+  main{
+    max-width: clamp(360px, 78vw, 1200px);
+    margin: 0 auto;
+    padding: 3rem 5vw 6rem;
+    display:flex;
+    flex-direction: column;
+    gap: 3.4rem;
+  }
+
+  .page{
+    scroll-margin-top: 4rem;
+  }
+  .tag{
+    display:flex;
+    align-items:center;
+    gap:0.7rem;
+    margin-bottom:0.8rem;
+  }
+  .tag .num{
+    font-family:'Shippori Mincho', serif;
+    font-weight:700;
+    color: var(--persimmon);
+    font-size:1rem;
+    min-width: 2.4rem;
+  }
+  .tag .label{
+    font-size:0.82rem;
+    color: rgba(38,34,28,0.65);
+    letter-spacing:0.03em;
+  }
+  .frame{
+    border-radius: 6px;
+    overflow:hidden;
+    box-shadow:
+      0 14px 28px -16px rgba(28,46,74,0.4),
+      0 3px 8px rgba(28,46,74,0.15);
+    background: linear-gradient(160deg, var(--indigo), var(--indigo-deep));
+  }
+  .frame img{
+    width:100%;
+    display:block;
+  }
+  .cover .frame{
+    box-shadow:
+      0 22px 40px -18px rgba(28,46,74,0.5),
+      0 4px 10px rgba(28,46,74,0.2);
+  }
+  .cover .tag .label, .backcover .tag .label{
+    color: var(--indigo-deep);
+    font-weight:700;
+  }
+  .backcover .frame img{
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    object-position: top;
+  }
+
+  footer{
+    text-align:center;
+    padding: 3rem 6vw 4rem;
+    color: rgba(38,34,28,0.45);
+    font-size:0.78rem;
+    letter-spacing:0.04em;
+    border-top: 1px solid rgba(38,34,28,0.1);
+  }
+
+  #toTop{
+    position: fixed;
+    right: 1.4rem;
+    bottom: 1.4rem;
+    width: 2.6rem;
+    height: 2.6rem;
+    border-radius: 50%;
+    background: var(--indigo);
+    color: var(--paper);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-decoration:none;
+    font-size:1.1rem;
+    box-shadow: 0 8px 18px -6px rgba(28,46,74,0.5);
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    pointer-events: none;
+  }
+  #toTop.show{ opacity:1; transform:translateY(0); pointer-events:auto; }
+</style>
+</head>
+<body>
+
+<div class="progress">
+  <span id="progressFill">0</span> / <span id="progressTotal">0</span> ページ
+</div>
+
+<header>
+  <p class="eyebrow">Picture Book</p>
+  <h1>遅れた７ふん</h1>
+  <p class="sub">せかい君とママの物語</p>
+</header>
+
+<main id="main"></main>
+
+<footer id="siteFooter">© 2026 せかい君とママの世界</footer>
+
+<a href="#top" id="toTop" aria-label="トップへ戻る">↑</a>
+
+<script>
+  const pages = [
+    {
+        "type": "cover",
+        "caption": "表紙",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/56366033/1785207147164_56366033_Q4mza.png"
+    },
+    {
+        "type": "page",
+        "num": 1,
+        "caption": "朝７時の完璧なスタート",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/56366033/1784973655970_56366033_Tlx5w.png"
+    },
+    {
+        "type": "page",
+        "num": 2,
+        "caption": "かばんをかえたい",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/56366033/1784973843877_56366033_ucbyB.png"
+    },
+    {
+        "type": "page",
+        "num": 3,
+        "caption": "えらぼうか",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/56366033/1784973935774_56366033_X5RR8.png"
+    },
+    {
+        "type": "page",
+        "num": 4,
+        "caption": "二日目の夜、自分でじゅんび",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/56366033/1784974014372_56366033_leSDp.png"
+    },
+    {
+        "type": "page",
+        "num": 5,
+        "caption": "なにを入れるんだっけ",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/56366033/1784974085936_56366033_nplge.png"
+    },
+    {
+        "type": "page",
+        "num": 6,
+        "caption": "できたね",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/56366033/1785050126464_56366033_UOJm7.png"
+    },
+    {
+        "type": "page",
+        "num": 7,
+        "caption": "夏休みのゆっくり朝",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/56366033/1785050302972_56366033_Sa1gh.png"
+    },
+    {
+        "type": "page",
+        "num": 8,
+        "caption": "スプーンとフォークを洗う",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/56366033/1785050474434_56366033_rebef.png"
+    },
+    {
+        "type": "page",
+        "num": 9,
+        "caption": "麦茶、入れた？",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/56366033/1785050642439_56366033_jdMMI.png"
+    },
+    {
+        "type": "page",
+        "num": 10,
+        "caption": "GPSの青い点",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/56366033/1785050805461_56366033_83Apv.png"
+    },
+    {
+        "type": "page",
+        "num": 11,
+        "caption": "三十七度のあつい道",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/56366033/1785146307345_56366033_DHSMe.png"
+    },
+    {
+        "type": "page",
+        "num": 12,
+        "caption": "少しずつできることがふえる",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/56366033/1785146475838_56366033_nkPnP.png"
+    },
+    {
+        "type": "page",
+        "num": 13,
+        "caption": "ママのすることもへる",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/56366033/1785146642336_56366033_OPmME.png"
+    },
+    {
+        "type": "page",
+        "num": 14,
+        "caption": "小さなことのつみかさね",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/56366033/1785146809961_56366033_Imihf.png"
+    },
+    {
+        "type": "page",
+        "num": 15,
+        "caption": "今の二人の歩き方",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/56366033/1785146977053_56366033_NnCgK.png"
+    },
+    {
+        "type": "page",
+        "num": 16,
+        "caption": "ゆっくりそだつ夏休み",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/56366033/1785207057035_56366033_q3jd7.png"
+    },
+    {
+        "type": "back",
+        "caption": "裏表紙",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/56366033/1785207238955_56366033_Iq3N8.png"
+    }
+];
+
+  const main = document.getElementById('main');
+
+  pages.forEach((p, i) => {
+    const sec = document.createElement('section');
+    sec.className = 'page' + (p.type === 'cover' ? ' cover' : p.type === 'back' ? ' backcover' : '');
+    if (i === 0) sec.id = 'top';
+
+    let labelText;
+    if (p.type === 'cover') labelText = '\ud83c\udf1f 表紙' + (p.caption ? ' ' + p.caption : '');
+    else if (p.type === 'back') labelText = '\ud83c\udf1f 裏表紙' + (p.caption ? ' ' + p.caption : '');
+    else labelText = `\ud83d\udcd6 P${p.num}` + (p.caption ? ' ' + p.caption : '');
+
+    const numLabel = p.type === 'page' ? String(p.num).padStart(2, '0') : (p.type === 'cover' ? '★' : '☆');
+
+    sec.innerHTML = `
+      <div class="tag"><span class="num">${numLabel}</span><span class="label">${labelText}</span></div>
+      <div class="frame"><img src="${p.src}" alt="${labelText}" loading="lazy"></div>
+    `;
+    main.appendChild(sec);
+  });
+
+  document.getElementById('progressTotal').textContent = pages.length;
+
+  const sections = Array.from(document.querySelectorAll('.page'));
+  const progressFill = document.getElementById('progressFill');
+  const toTop = document.getElementById('toTop');
+
+  function updateProgress(){
+    let current = 1;
+    for (let i = 0; i < sections.length; i++){
+      const rect = sections[i].getBoundingClientRect();
+      if (rect.top < window.innerHeight * 0.5) current = i + 1;
+    }
+    progressFill.textContent = current;
+    toTop.classList.toggle('show', window.scrollY > 400);
+  }
+  document.addEventListener('scroll', updateProgress, { passive: true });
+  updateProgress();
+</script>
+
+</body>
+</html>

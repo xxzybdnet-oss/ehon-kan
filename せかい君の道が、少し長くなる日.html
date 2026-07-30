@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>せかい君の道が、少し長くなる日</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper: #EAE3D4;
+    --paper-deep: #DED4BF;
+    --ink: #26221C;
+    --indigo: #2B4570;
+    --indigo-deep: #1C2E4A;
+    --persimmon: #D96C3F;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body{
+    margin:0;
+    background:
+      radial-gradient(circle at 15% 6%, rgba(201,162,75,0.10), transparent 40%),
+      radial-gradient(circle at 85% 92%, rgba(43,69,112,0.08), transparent 45%),
+      var(--paper);
+    color: var(--ink);
+    font-family: 'Zen Kaku Gothic New', 'Hiragino Sans', sans-serif;
+  }
+
+  header{
+    text-align:center;
+    padding: 4.2rem 6vw 3rem;
+    border-bottom: 1px solid rgba(38,34,28,0.12);
+  }
+  .eyebrow{
+    font-size:0.75rem;
+    letter-spacing:0.32em;
+    color: var(--indigo);
+    text-transform: uppercase;
+    font-weight:700;
+    margin:0 0 1rem;
+  }
+  h1{
+    font-family:'Shippori Mincho', serif;
+    font-weight:700;
+    font-size: clamp(2rem, 5.5vw, 3.4rem);
+    margin:0 0 0.6rem;
+  }
+  .sub{
+    color: rgba(38,34,28,0.6);
+    font-size:0.95rem;
+    margin:0;
+  }
+  .progress{
+    position: sticky;
+    top:0;
+    z-index: 5;
+    background: rgba(234,227,212,0.88);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid rgba(38,34,28,0.1);
+    padding: 0.55rem 0;
+    text-align:center;
+    font-size:0.72rem;
+    letter-spacing:0.1em;
+    color: var(--indigo-deep);
+  }
+  #progressFill{
+    color: var(--persimmon);
+    font-family:'Shippori Mincho', serif;
+    font-weight:700;
+  }
+
+  main{
+    max-width: clamp(360px, 78vw, 1200px);
+    margin: 0 auto;
+    padding: 3rem 5vw 6rem;
+    display:flex;
+    flex-direction: column;
+    gap: 3.4rem;
+  }
+
+  .page{
+    scroll-margin-top: 4rem;
+  }
+  .tag{
+    display:flex;
+    align-items:center;
+    gap:0.7rem;
+    margin-bottom:0.8rem;
+  }
+  .tag .num{
+    font-family:'Shippori Mincho', serif;
+    font-weight:700;
+    color: var(--persimmon);
+    font-size:1rem;
+    min-width: 2.4rem;
+  }
+  .tag .label{
+    font-size:0.82rem;
+    color: rgba(38,34,28,0.65);
+    letter-spacing:0.03em;
+  }
+  .frame{
+    border-radius: 6px;
+    overflow:hidden;
+    box-shadow:
+      0 14px 28px -16px rgba(28,46,74,0.4),
+      0 3px 8px rgba(28,46,74,0.15);
+    background: linear-gradient(160deg, var(--indigo), var(--indigo-deep));
+  }
+  .frame img{
+    width:100%;
+    display:block;
+  }
+  .cover .frame{
+    box-shadow:
+      0 22px 40px -18px rgba(28,46,74,0.5),
+      0 4px 10px rgba(28,46,74,0.2);
+  }
+  .cover .tag .label, .backcover .tag .label{
+    color: var(--indigo-deep);
+    font-weight:700;
+  }
+  .backcover .frame img{
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    object-position: top;
+  }
+
+  footer{
+    text-align:center;
+    padding: 3rem 6vw 4rem;
+    color: rgba(38,34,28,0.45);
+    font-size:0.78rem;
+    letter-spacing:0.04em;
+    border-top: 1px solid rgba(38,34,28,0.1);
+  }
+
+  #toTop{
+    position: fixed;
+    right: 1.4rem;
+    bottom: 1.4rem;
+    width: 2.6rem;
+    height: 2.6rem;
+    border-radius: 50%;
+    background: var(--indigo);
+    color: var(--paper);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-decoration:none;
+    font-size:1.1rem;
+    box-shadow: 0 8px 18px -6px rgba(28,46,74,0.5);
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    pointer-events: none;
+  }
+  #toTop.show{ opacity:1; transform:translateY(0); pointer-events:auto; }
+</style>
+</head>
+<body>
+
+<div class="progress">
+  <span id="progressFill">0</span> / <span id="progressTotal">0</span> ページ
+</div>
+
+<header>
+  <p class="eyebrow">Picture Book</p>
+  <h1>せかい君の道が、少し長くなる日</h1>
+  <p class="sub">せかい君とママの物語</p>
+</header>
+
+<main id="main"></main>
+
+<footer id="siteFooter">© 2026 せかい君とママの世界</footer>
+
+<a href="#top" id="toTop" aria-label="トップへ戻る">↑</a>
+
+<script>
+  const pages = [
+    {
+        "type": "cover",
+        "caption": "表紙",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/56366033/1785383701435_56366033_Aq7kt.png"
+    },
+    {
+        "type": "page",
+        "num": 1,
+        "caption": "雨の朝の寝室",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/56366033/1782727851004_56366033_uZIaE.png"
+    },
+    {
+        "type": "page",
+        "num": 2,
+        "caption": "玄関の出発",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/56366033/1782728084934_56366033_3jFO9.png"
+    },
+    {
+        "type": "page",
+        "num": 3,
+        "caption": "雨の通学路",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/56366033/1782779577702_56366033_n3SFT.png"
+    },
+    {
+        "type": "page",
+        "num": 4,
+        "caption": "ママの見送り",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/56366033/1782816432613_56366033_FuLuc.png"
+    },
+    {
+        "type": "page",
+        "num": 5,
+        "caption": "二ヶ月の道",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/56366033/1782816521692_56366033_YGN84.png"
+    },
+    {
+        "type": "page",
+        "num": 6,
+        "caption": "Kids Club の夕方",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/56366033/1782816589460_56366033_WOWa8.png"
+    },
+    {
+        "type": "page",
+        "num": 7,
+        "caption": "行きの道と帰りの道",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/56366033/1782816654754_56366033_AiHhn.png"
+    },
+    {
+        "type": "page",
+        "num": 8,
+        "caption": "『7歳になったら』の気づき",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/56366033/1782866838173_56366033_EELc4.png"
+    },
+    {
+        "type": "page",
+        "num": 9,
+        "caption": "ママの変化",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/56366033/1782866922023_56366033_HiLmj.png"
+    },
+    {
+        "type": "page",
+        "num": 10,
+        "caption": "17時の玄関",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/56366033/1782866983722_56366033_35rj6.png"
+    },
+    {
+        "type": "page",
+        "num": 11,
+        "caption": "帰ってきたせかい君",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/56366033/1782867060742_56366033_8Qey2.png"
+    },
+    {
+        "type": "page",
+        "num": 12,
+        "caption": "みんなの帰り道",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/56366033/1782867134123_56366033_K97q3.png"
+    },
+    {
+        "type": "page",
+        "num": 13,
+        "caption": "小猫との出会い",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/56366033/1785284295035_56366033_hPz7W.png"
+    },
+    {
+        "type": "page",
+        "num": 14,
+        "caption": "明日も一人で帰る宣言",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/56366033/1785284364921_56366033_NIc28.png"
+    },
+    {
+        "type": "page",
+        "num": 15,
+        "caption": "100時間の自信",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/56366033/1785284423229_56366033_UeOoL.png"
+    },
+    {
+        "type": "back",
+        "caption": "裏表紙",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/56366033/1785383816621_56366033_Y8NCy.png"
+    }
+];
+
+  const main = document.getElementById('main');
+
+  pages.forEach((p, i) => {
+    const sec = document.createElement('section');
+    sec.className = 'page' + (p.type === 'cover' ? ' cover' : p.type === 'back' ? ' backcover' : '');
+    if (i === 0) sec.id = 'top';
+
+    let labelText;
+    if (p.type === 'cover') labelText = '\ud83c\udf1f 表紙' + (p.caption ? ' ' + p.caption : '');
+    else if (p.type === 'back') labelText = '\ud83c\udf1f 裏表紙' + (p.caption ? ' ' + p.caption : '');
+    else labelText = `\ud83d\udcd6 P${p.num}` + (p.caption ? ' ' + p.caption : '');
+
+    const numLabel = p.type === 'page' ? String(p.num).padStart(2, '0') : (p.type === 'cover' ? '★' : '☆');
+
+    sec.innerHTML = `
+      <div class="tag"><span class="num">${numLabel}</span><span class="label">${labelText}</span></div>
+      <div class="frame"><img src="${p.src}" alt="${labelText}" loading="lazy"></div>
+    `;
+    main.appendChild(sec);
+  });
+
+  document.getElementById('progressTotal').textContent = pages.length;
+
+  const sections = Array.from(document.querySelectorAll('.page'));
+  const progressFill = document.getElementById('progressFill');
+  const toTop = document.getElementById('toTop');
+
+  function updateProgress(){
+    let current = 1;
+    for (let i = 0; i < sections.length; i++){
+      const rect = sections[i].getBoundingClientRect();
+      if (rect.top < window.innerHeight * 0.5) current = i + 1;
+    }
+    progressFill.textContent = current;
+    toTop.classList.toggle('show', window.scrollY > 400);
+  }
+  document.addEventListener('scroll', updateProgress, { passive: true });
+  updateProgress();
+</script>
+
+</body>
+</html>
