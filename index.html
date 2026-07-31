@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
-  :root{
+  :root {
     --paper: #EAE3D4;
     --paper-deep: #DED4BF;
     --ink: #26221C;
@@ -33,8 +33,7 @@
     -webkit-font-smoothing: antialiased;
   }
 
-  /* subtle paper texture via layered noise-free grain using repeating gradient */
-  body::before{
+  body::before {
     content:"";
     position: fixed;
     inset: 0;
@@ -116,31 +115,49 @@
     padding: 4rem 6vw 7rem;
   }
 
+  .section-divider {
+    margin: 5rem 0 3rem;
+  }
+
   .shelf-label {
     display: flex;
     align-items: center;
-    gap: 1rem;
-    margin: 0 0 2.6rem;
+    gap: 1.2rem;
     color: var(--indigo-deep);
   }
 
   .shelf-label .line {
     flex: 1;
     height: 1px;
-    background: linear-gradient(90deg, rgba(43,69,112,0.4), transparent);
+    background: linear-gradient(90deg, rgba(43,69,112,0.35), transparent);
+  }
+
+  .shelf-label .line.reverse {
+    background: linear-gradient(270deg, rgba(43,69,112,0.35), transparent);
   }
 
   .shelf-label span {
     font-family: 'Shippori Mincho', serif;
-    font-size: 1.1rem;
-    letter-spacing: 0.06em;
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
     white-space: nowrap;
+    color: var(--indigo-deep);
+  }
+
+  .shelf-sub {
+    text-align: center;
+    font-size: 0.82rem;
+    color: rgba(38,34,28,0.55);
+    margin-top: 0.5rem;
+    letter-spacing: 0.05em;
   }
 
   .grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(168px, 1fr));
     gap: 2.4rem 1.8rem;
+    margin-top: 2rem;
   }
 
   .book {
@@ -187,20 +204,6 @@
     display: block;
   }
 
-  .cover-placeholder {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: 'Shippori Mincho', serif;
-    color: rgba(255,255,255,0.85);
-    font-size: 0.85rem;
-    text-align: center;
-    padding: 1.2rem;
-    line-height: 1.7;
-  }
-
   .vol-tag {
     position: absolute;
     top: 0.6rem;
@@ -213,6 +216,10 @@
     border-radius: 2px;
     font-family: 'Zen Kaku Gothic New', sans-serif;
     backdrop-filter: blur(2px);
+  }
+
+  .vol-tag.archive {
+    background: rgba(217, 108, 63, 0.75);
   }
 
   .book-title {
@@ -240,18 +247,106 @@
     border-top: 1px solid rgba(38,34,28,0.1);
   }
 
-  @media (prefers-reduced-motion: reduce) {
-    .book-card { transition: none; }
-    .book:hover .book-card { transform: none; }
-  }
-
   @media (max-width: 480px) {
     header { padding: 3.6rem 6vw 3rem; }
     .grid { grid-template-columns: repeat(auto-fill, minmax(128px, 1fr)); gap: 1.8rem 1.1rem; }
   }
+
+  /* ---- 入場時のおやくそくモーダル ---- */
+  #gateOverlay {
+    position: fixed;
+    inset: 0;
+    z-index: 999;
+    background: rgba(50, 65, 85, 0.6);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+  }
+  #gateOverlay.hidden { display: none; }
+  
+  .gate-card {
+    background: #F3EFE6;
+    max-width: 450px;
+    width: 100%;
+    border-radius: 16px;
+    padding: 2.2rem 2rem 2rem;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    text-align: center;
+    box-sizing: border-box;
+  }
+
+  .gate-card h2 {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 1.35rem;
+    font-weight: 700;
+    margin: 0 0 1.5rem;
+    color: #2C3E55;
+    letter-spacing: 0.02em;
+  }
+
+  .gate-content {
+    text-align: center;
+    font-size: 0.82rem;
+    line-height: 1.85;
+    color: #555048;
+    margin-bottom: 1.8rem;
+  }
+
+  .gate-content p {
+    margin: 0 0 1.1rem 0;
+  }
+
+  .gate-content p:last-child {
+    margin-bottom: 0;
+  }
+
+  .gate-card button {
+    background: #E06D3B;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 8px;
+    padding: 0.75rem 2.8rem;
+    font-family: 'Zen Kaku Gothic New', sans-serif;
+    font-weight: 700;
+    font-size: 0.88rem;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    box-shadow: 0 4px 10px rgba(224, 109, 59, 0.25);
+  }
+
+  .gate-card button:hover {
+    background: #C95B2A;
+  }
+
+  .gate-card button:active {
+    transform: scale(0.98);
+  }
 </style>
 </head>
 <body>
+
+<!-- 入場提示窗口 -->
+<div id="gateOverlay">
+  <div class="gate-card">
+    <h2>🌱 小さな絵本館のおやくそく</h2>
+    <div class="gate-content">
+      <p>ようこそ、小さな森の中の絵本館へ。<br>
+      ここには、日々の暮らしや子どもの成長、家族の思い出から生まれた物語たちが並んでいます。</p>
+      
+      <p>一冊一冊の絵本は、大切な時間を残した小さな宝物です。</p>
+      
+      <p>もし誰かに紹介したくなった時は、先にひとこと声をかけてもらえるとうれしいです。<br>
+      また、こちらのURLや画像、文章などを、許可なく外部へ公開・転載することはご遠慮ください。</p>
+      
+      <p>この小さな森を、一緒に大切に育てていただけたら幸せです。<br>
+      いつでも安心して帰ってこられる、あたたかな場所でありますように。 🌱</p>
+    </div>
+    <button id="gateOkBtn">OK、約束します</button>
+  </div>
+</div>
 
 <header>
   <p class="eyebrow">Picture Book Archive</p>
@@ -264,142 +359,244 @@
 </header>
 
 <main>
-  <div class="shelf-label"><div class="line"></div><span>本棚</span><div class="line"></div></div>
-  <div class="grid" id="grid"></div>
+  <!-- 最新 14 本 -->
+  <div class="section-divider" style="margin-top:0;">
+    <div class="shelf-label">
+      <div class="line reverse"></div>
+      <span>✨ 最新の絵本</span>
+      <div class="line"></div>
+    </div>
+    <p class="shelf-sub">新しくお届けする物語のコレクション</p>
+  </div>
+  <div class="grid" id="gridNew"></div>
+
+  <!-- 历史 24 本 -->
+  <div class="section-divider">
+    <div class="shelf-label">
+      <div class="line reverse"></div>
+      <span>📜 過去の作品アーカイブ</span>
+      <div class="line"></div>
+    </div>
+    <p class="shelf-sub">これまでの歩みと大切な思い出の絵本</p>
+  </div>
+  <div class="grid" id="gridArchive"></div>
 </main>
 
 <footer>© せかい君と、ママの記録 · この本棚はゆっくり増えていきます</footer>
 
 <script>
-  /* ==========================================================
-     ここに絵本を追加してください。
-     number : 通し番号（本棚の並び順に使います）
-     title  : 絵本のタイトル
-     cover  : 表紙画像のURL（なければ空文字 "" でOK。プレースホルダーが出ます）
-     link   : クリックしたときに開く絵本ページのURL
-     ========================================================== */
-  const books = [
-    {
-      number: 1,
-      title: "わたしのルール",
-      cover: "https://cdn.pagepop.top/gcs/ai/gpt_image2/56592648/1785214710059_56592648_ONx8f.png",
-      link: "https://img-volc.jianpian.info/super/markdown_injector/ai_resource/56592648/1785284512504_56592648_vD1A1.html"
-    },
-
-    {
-      number: 2,
-      title: "筆箱と三羽の小鳥と六歳の土曜日",
-      cover: "https://cdn.pagepop.top/gcs/ai/gpt_image2/56592648/1785305371539_56592648_IG6Sn.png",
-      link: "https://xxzybdnet-oss.github.io/ehon-kan/筆箱と三羽の小鳥と六歳の土曜日.html".normalize('NFD')
-    },
-
-    {
-      number: 3,
-      title: "夏休みのふつうの週末",
-      cover: "https://cdn.pagepop.top/gcs/ai/gpt_image2/55856026/1785284158215_55856026_mLrlL.png",
-      link: "https://xxzybdnet-oss.github.io/ehon-kan/夏休みのふつうの週末.html".normalize('NFD')
-    },
-
-    {
-      number: 4,
-      title: "LOVOT、折紙、刀削麺と、六歳の横浜たんけん",
-      cover: "https://cdn.pagepop.top/gcs/ai/gpt_image2/55936696/1785378541953_55936696_q2eJZ.png",
-      link: "https://xxzybdnet-oss.github.io/ehon-kan/LOVOT、折紙、刀削麺と、六歳の横浜たんけん.html".normalize('NFD')
-    },
-    {
-      number: 5,
-      title: "せかい君の道が、少し長くなる日",
-      cover: "https://cdn.pagepop.top/gcs/ai/gpt_image2/56366033/1785383701435_56366033_Aq7kt.png",
-      link: "https://xxzybdnet-oss.github.io/ehon-kan/せかい君の道が、少し長くなる日.html".normalize('NFD')
-    },
-    {
-      number: 6,
-      title: "ひらいていく子ども",
-      cover: "https://cdn.pagepop.top/gcs/ai/gpt_image2/56592648/1785382492640_56592648_EiWxi.png",
-      link: "https://xxzybdnet-oss.github.io/ehon-kan/ひらいていく子ども.html".normalize('NFD')
-    },
-    {
-      number: 7,
-      title: "ボールがつまった日",
-      cover: "https://cdn.pagepop.top/gcs/ai/gpt_image2/56592648/1785212213051_56592648_WE3kG.png",
-      link: "https://xxzybdnet-oss.github.io/ehon-kan/ボールがつまった日.html".normalize('NFD')
-    },
-    {
-      number: 8,
-      title: "ママはどうして泣くの？",
-      cover: "https://cdn.pagepop.top/gcs/ai/gpt_image2/56366033/1785385463358_56366033_ITJRC.png",
-      link: "https://xxzybdnet-oss.github.io/ehon-kan/ママはどうして泣くの？.html".normalize('NFD')
-    },
-    {
-      number: 9,
-      title: "今日のちいさな成長",
-      cover: "https://cdn.pagepop.top/gcs/ai/gpt_image2/55856026/1785385878465_55856026_D0zEf.png",
-      coverPos: "left center",
-      link: "https://xxzybdnet-oss.github.io/ehon-kan/今日のちいさな成長.html".normalize('NFD')
-    },
-    {
-      number: 10,
-      title: "七月の再会",
-      cover: "https://cdn.pagepop.top/gcs/ai/gpt_image2/55856026/1785386137271_55856026_IvmHr.png",
-      link: "https://xxzybdnet-oss.github.io/ehon-kan/七月の再会.html".normalize('NFD')
-    },
-    {
-      number: 11,
-      title: "折纸、地震和小青虫",
-      cover: "https://cdn.pagepop.top/gcs/ai/gpt_image2/56366033/1785212178232_56366033_H3S0C.png",
-      link: "https://xxzybdnet-oss.github.io/ehon-kan/折纸、地震和小青虫.html".normalize('NFD')
-    },
-    {
-      number: 12,
-      title: "遅れた７ふん",
-      cover: "https://cdn.pagepop.top/gcs/ai/gpt_image2/56366033/1785207147164_56366033_Q4mza.png",
-      link: "https://xxzybdnet-oss.github.io/ehon-kan/遅れた７ふん.html".normalize('NFD')
-    },
-    {
-      number: 13,
-      title: "宝石店、八十万と、六歳の寝る前のゆめ",
-      cover: "https://cdn.pagepop.top/gcs/ai/gpt_image2/56366033/1785283860850_56366033_umT2d.png",
-      link: "https://xxzybdnet-oss.github.io/ehon-kan/宝石店、八十万と、六歳の寝る前のゆめ.html".normalize('NFD')
-    },
-    {
-      number: 14,
-      title: "連休のさざなみ",
-      cover: "https://cdn.pagepop.top/gcs/ai/gpt_image2/55936696/1785385552383_55936696_RAEyt.png",
-      link: "https://xxzybdnet-oss.github.io/ehon-kan/連休のさざなみ.html".normalize('NFD')
-    },
+  const newBooks = [
+    { number: 1, title: "わたしのルール", cover: "https://cdn.pagepop.top/gcs/ai/gpt_image2/56592648/1785214710059_56592648_ONx8f.png", link: "https://img-volc.jianpian.info/super/markdown_injector/ai_resource/56592648/1785284512504_56592648_vD1A1.html" },
+    { number: 2, title: "筆箱と三羽の小鳥と六歳の土曜日", cover: "https://cdn.pagepop.top/gcs/ai/gpt_image2/56592648/1785305371539_56592648_IG6Sn.png", link: "https://xxzybdnet-oss.github.io/ehon-kan/筆箱と三羽の小鳥と六歳の土曜日.html".normalize('NFD') },
+    { number: 3, title: "夏休みのふつうの週末", cover: "https://cdn.pagepop.top/gcs/ai/gpt_image2/55856026/1785284158215_55856026_mLrlL.png", link: "https://xxzybdnet-oss.github.io/ehon-kan/夏休みのふつうの週末.html".normalize('NFD') },
+    { number: 4, title: "LOVOT、折紙、刀削麺と、六歳の横浜たんけん", cover: "https://cdn.pagepop.top/gcs/ai/gpt_image2/55936696/1785378541953_55936696_q2eJZ.png", link: "https://xxzybdnet-oss.github.io/ehon-kan/LOVOT、折紙、刀削麺と、六歳の横浜たんけん.html".normalize('NFD') },
+    { number: 5, title: "せかい君の道が、少し長くなる日", cover: "https://cdn.pagepop.top/gcs/ai/gpt_image2/56366033/1785383701435_56366033_Aq7kt.png", link: "https://xxzybdnet-oss.github.io/ehon-kan/せかい君の道が、少し長くなる日.html".normalize('NFD') },
+    { number: 6, title: "ひらいていく子ども", cover: "https://cdn.pagepop.top/gcs/ai/gpt_image2/56592648/1785382492640_56592648_EiWxi.png", link: "https://xxzybdnet-oss.github.io/ehon-kan/ひらいていく子ども.html".normalize('NFD') },
+    { number: 7, title: "ボールがつまった日", cover: "https://cdn.pagepop.top/gcs/ai/gpt_image2/56592648/1785212213051_56592648_WE3kG.png", link: "https://xxzybdnet-oss.github.io/ehon-kan/ボールがつまった日.html".normalize('NFD') },
+    { number: 8, title: "ママはどうして泣くの？", cover: "https://cdn.pagepop.top/gcs/ai/gpt_image2/56366033/1785385463358_56366033_ITJRC.png", link: "https://xxzybdnet-oss.github.io/ehon-kan/ママはどうして泣くの？.html".normalize('NFD') },
+    { number: 9, title: "今日のちいさな成長", cover: "https://cdn.pagepop.top/gcs/ai/gpt_image2/55856026/1785385878465_55856026_D0zEf.png", link: "https://xxzybdnet-oss.github.io/ehon-kan/今日のちいさな成長.html".normalize('NFD') },
+    { number: 10, title: "七月の再会", cover: "https://cdn.pagepop.top/gcs/ai/gpt_image2/55856026/1785386137271_55856026_IvmHr.png", link: "https://xxzybdnet-oss.github.io/ehon-kan/七月の再会.html".normalize('NFD') },
+    { number: 11, title: "折纸、地震和小青虫", cover: "https://cdn.pagepop.top/gcs/ai/gpt_image2/56366033/1785212178232_56366033_H3S0C.png", link: "https://xxzybdnet-oss.github.io/ehon-kan/折纸、地震和小青虫.html".normalize('NFD') },
+    { number: 12, title: "遅れた７ふん", cover: "https://cdn.pagepop.top/gcs/ai/gpt_image2/56366033/1785207147164_56366033_Q4mza.png", link: "https://xxzybdnet-oss.github.io/ehon-kan/遅れた７ふん.html".normalize('NFD') },
+    { number: 13, title: "宝石店、八十万と、六歳の寝る前のゆめ", cover: "https://cdn.pagepop.top/gcs/ai/gpt_image2/56366033/1785283860850_56366033_umT2d.png", link: "https://xxzybdnet-oss.github.io/ehon-kan/宝石店、八十万と、六歳の寝る前のゆめ.html".normalize('NFD') },
+    { number: 14, title: "連休のさざなみ", cover: "https://cdn.pagepop.top/gcs/ai/gpt_image2/55936696/1785385552383_55936696_RAEyt.png", link: "https://xxzybdnet-oss.github.io/ehon-kan/連休のさざなみ.html".normalize('NFD') }
   ];
 
-  const grid = document.getElementById('grid');
-  const statCount = document.getElementById('statCount');
-  statCount.textContent = books.length;
+  const archiveBooks = [
+  {
+    "number": 1,
+    "title": "001《青のりゆう》绘本全套4页 文本OK",
+    "cover": "https://lh3.googleusercontent.com/d/1TGHHXQw1r0y0rf0U63qwC8poFA15tZ3p",
+    "link": "https://xxzybdnet-oss.github.io/ehon-kan/001.html".normalize('NFD')
+  },
+  {
+    "number": 2,
+    "title": "002《石けんを食べるネズミ》绘本全套5页 文本OK",
+    "cover": "https://lh3.googleusercontent.com/d/1uXBaSXPsrwJk8ATD5YfAJGcdIwEN6lfm",
+    "link": "https://xxzybdnet-oss.github.io/ehon-kan/002.html".normalize('NFD')
+  },
+  {
+    "number": 3,
+    "title": "003《生まれ変わるとり》绘本全套7页 文本OK",
+    "cover": "https://lh3.googleusercontent.com/d/1zHD3eQFS0cjZMvEpNFJFrn-YR59aPf-Z",
+    "link": "https://xxzybdnet-oss.github.io/ehon-kan/003.html".normalize('NFD')
+  },
+  {
+    "number": 4,
+    "title": "004《３０万のねこちゃん》绘本全套9页 文本OK",
+    "cover": "https://lh3.googleusercontent.com/d/1pAMDWxrFQCFhle2T10G_29nlnlPFhV7U",
+    "link": "https://xxzybdnet-oss.github.io/ehon-kan/004.html".normalize('NFD')
+  },
+  {
+    "number": 5,
+    "title": "005《６才のまんてんかかい》绘本全套14页 文本OK",
+    "cover": "https://lh3.googleusercontent.com/d/1Wy0_wKSXG95Tyb_7bXqmvmayyPu6Tg8_",
+    "link": "https://xxzybdnet-oss.github.io/ehon-kan/005.html".normalize('NFD')
+  },
+  {
+    "number": 6,
+    "title": "006《初めてのおつかい》绘本全套16页 文本OK",
+    "cover": "https://lh3.googleusercontent.com/d/1NgMR9hOrOjd1ziwTf8UvCQtlHkfgjGLR",
+    "link": "https://xxzybdnet-oss.github.io/ehon-kan/006.html".normalize('NFD')
+  },
+  {
+    "number": 7,
+    "title": "007《冰格曼卡拉》绘本全套14页 文本OK",
+    "cover": "https://lh3.googleusercontent.com/d/1G8MZ-RN5qaock4Xvrwq7T4nuOIMpukBr",
+    "link": "https://xxzybdnet-oss.github.io/ehon-kan/007.html".normalize('NFD')
+  },
+  {
+    "number": 8,
+    "title": "008《子牛のいちにち》绘本全套12页 文本OK",
+    "cover": "https://lh3.googleusercontent.com/d/1pT2vFCGPNhq0Z8tQOxRQTtYWky4ceA51",
+    "link": "https://xxzybdnet-oss.github.io/ehon-kan/008.html".normalize('NFD')
+  },
+  {
+    "number": 9,
+    "title": "009《はじめてのおかね》绘本全套12页 文本OK",
+    "cover": "https://lh3.googleusercontent.com/d/1T3HwHB2KBDiCvHzMYtg4AQ8NEbeST_SX",
+    "link": "https://xxzybdnet-oss.github.io/ehon-kan/009.html".normalize('NFD')
+  },
+  {
+    "number": 10,
+    "title": "010《しずかな のう》绘本全套33页 文本OK",
+    "cover": "https://lh3.googleusercontent.com/d/1wGr1Adwh640XWgVnzvCKTmz0cO37Njga",
+    "link": "https://xxzybdnet-oss.github.io/ehon-kan/010.html".normalize('NFD')
+  },
+  {
+    "number": 11,
+    "title": "011《ひとりでがっこうへ》绘本全套30页 文本OK",
+    "cover": "https://lh3.googleusercontent.com/d/1qcxXI7hTgmDbHcGfGhU8X59Ya_q4ABeH",
+    "link": "https://xxzybdnet-oss.github.io/ehon-kan/011.html".normalize('NFD')
+  },
+  {
+    "number": 12,
+    "title": "012《よみあげられた きおく》全32页 文本OK",
+    "cover": "https://lh3.googleusercontent.com/d/1VpY12nyHq50Os3LmfiG3QdggdaTaOWy7",
+    "link": "https://xxzybdnet-oss.github.io/ehon-kan/012.html".normalize('NFD')
+  },
+  {
+    "number": 13,
+    "title": "013《ちくちくことばが書いたにゅうよくざい》绘本全套32页 文本OK",
+    "cover": "https://lh3.googleusercontent.com/d/1Lpx85fHs7pl09GGxgHn_jtdyyY6vXlOZ",
+    "link": "https://xxzybdnet-oss.github.io/ehon-kan/013.html".normalize('NFD')
+  },
+  {
+    "number": 14,
+    "title": "014《はじめての せかい》绘本全套33页  开页版整理中",
+    "cover": "https://lh3.googleusercontent.com/d/1yjRKdj9N-7zdqbwj0HzOdhQlLDCxrPcl",
+    "link": "https://xxzybdnet-oss.github.io/ehon-kan/014.html".normalize('NFD')
+  },
+  {
+    "number": 15,
+    "title": "015《迷った朝（早上的未解之谜）》绘本全套33页 开页版整理中",
+    "cover": "https://lh3.googleusercontent.com/d/10mhNcTreYEQSSKcOP_NvnqkVY8GxbkRu",
+    "link": "https://xxzybdnet-oss.github.io/ehon-kan/015.html".normalize('NFD')
+  },
+  {
+    "number": 16,
+    "title": "016《あの日のバスケットきょうしつ》绘本全套36页 开页版整理中",
+    "cover": "https://lh3.googleusercontent.com/d/11ZbndLAADiTv0wzqO68pdhoKnQi8x0sD",
+    "link": "https://xxzybdnet-oss.github.io/ehon-kan/016.html".normalize('NFD')
+  },
+  {
+    "number": 17,
+    "title": "017《ほうかごの きおく》绘本全套35页  开页版整理中",
+    "cover": "https://lh3.googleusercontent.com/d/1vTlqMgz0iKG4V5tt9GaYGY6RNb9Pwm0g",
+    "link": "https://xxzybdnet-oss.github.io/ehon-kan/017.html".normalize('NFD')
+  },
+  {
+    "number": 18,
+    "title": "018《ふあんのなかであいしつづける》绘本全套34页 开页版整理中",
+    "cover": "https://lh3.googleusercontent.com/d/1C9kQuTVn64Seib2tmDqOGecpynQvEtVY",
+    "link": "https://xxzybdnet-oss.github.io/ehon-kan/018.html".normalize('NFD')
+  },
+  {
+    "number": 19,
+    "title": "019《各自相遇的孩子们》绘本全套33页 开页版整理中",
+    "cover": "https://lh3.googleusercontent.com/d/1Q2AqRCfffMkTUZ5OMSxn1XrJ5swXaGe9",
+    "link": "https://xxzybdnet-oss.github.io/ehon-kan/019.html".normalize('NFD')
+  },
+  {
+    "number": 20,
+    "title": "020《ママとぼくの本》绘本全套33页 开页版整理中",
+    "cover": "https://lh3.googleusercontent.com/d/1gBpvHHk4MOlYEVwe9R9o8RPzxvzEGR4b",
+    "link": "https://xxzybdnet-oss.github.io/ehon-kan/020.html".normalize('NFD')
+  },
+  {
+    "number": 21,
+    "title": "021《那时天还没亮》绘本全套35页 开页版整理中",
+    "cover": "https://lh3.googleusercontent.com/d/1zYkXG3t1SoeXpWuKRRVGnO4IQqmTBguA",
+    "link": "https://xxzybdnet-oss.github.io/ehon-kan/021.html".normalize('NFD')
+  },
+  {
+    "number": 22,
+    "title": "022《那台紫色相机》绘本全套34页 开页版整理中",
+    "cover": "https://lh3.googleusercontent.com/d/17lhP14j9-RWwa-DJpK5NpA2qKtGAlNjW",
+    "link": "https://xxzybdnet-oss.github.io/ehon-kan/022.html".normalize('NFD')
+  },
+  {
+    "number": 23,
+    "title": "023《雪地里抱起的小白》绘本全套39页 开页版整理中",
+    "cover": "https://lh3.googleusercontent.com/d/1Oeb4qkkIhjrGpey1VjDdut3e3SbUTIC0",
+    "link": "https://xxzybdnet-oss.github.io/ehon-kan/023.html".normalize('NFD')
+  },
+  {
+    "number": 24,
+    "title": "024《やさしいぼくのここまで》  33页 开页版整理中",
+    "cover": "https://lh3.googleusercontent.com/d/1i8ARLldwAn-lnPtDz_rzvHQIvXhzoXDa",
+    "link": "https://xxzybdnet-oss.github.io/ehon-kan/024.html".normalize('NFD')
+  }
+];
 
-  books
-    .slice()
-    .sort((a, b) => a.number - b.number)
-    .forEach(book => {
+  function renderGrid(containerId, books, tagClass = '') {
+    const container = document.getElementById(containerId);
+    books.forEach(book => {
       const a = document.createElement('a');
       a.className = 'book';
       a.href = book.link || '#';
-      if (book.link && book.link !== '#') {
+      if (book.link && book.link.startsWith('http')) {
         a.target = '_blank';
         a.rel = 'noopener noreferrer';
       }
 
-      const coverInner = book.cover
-        ? `<img src="${book.cover}" alt="${book.title}の表紙" loading="lazy" style="object-position:${book.coverPos || 'center'};">`
-        : `<div class="cover-placeholder">${book.title}</div>`;
-
       a.innerHTML = `
         <div class="book-card">
           <div class="cover-wrap">
-            <span class="vol-tag">vol.${String(book.number).padStart(2,'0')}</span>
-            ${coverInner}
+            <span class="vol-tag ${tagClass}">vol.${String(book.number).padStart(2,'0')}</span>
+            <img src="${book.cover}" alt="${book.title}の表紙" loading="lazy">
           </div>
         </div>
         <div class="book-title"><span class="num">${String(book.number).padStart(2,'0')}</span>${book.title}</div>
       `;
-      grid.appendChild(a);
+      container.appendChild(a);
     });
+  }
+
+  document.getElementById('statCount').textContent = newBooks.length + archiveBooks.length;
+
+  renderGrid('gridNew', newBooks);
+  renderGrid('gridArchive', archiveBooks, 'archive');
+
+  // ---- 入場提示窗口控制逻辑 ----
+  (function(){
+    var overlay = document.getElementById('gateOverlay');
+    var okBtn = document.getElementById('gateOkBtn');
+    var agreed = sessionStorage.getItem('ehonkan_gate_agreed');
+
+    if (agreed === 'yes') {
+      overlay.classList.add('hidden');
+      document.body.style.overflow = '';
+    } else {
+      document.body.style.overflow = 'hidden';
+    }
+
+    okBtn.addEventListener('click', function(){
+      sessionStorage.setItem('ehonkan_gate_agreed', 'yes');
+      overlay.classList.add('hidden');
+      document.body.style.overflow = '';
+    });
+  })();
 </script>
 
 </body>
