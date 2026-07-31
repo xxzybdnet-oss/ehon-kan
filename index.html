@@ -197,7 +197,6 @@
     background: linear-gradient(160deg, var(--indigo), var(--indigo-deep));
   }
 
-  /* 恢复默认：所有图片全局居中裁切 */
   .cover-wrap img {
     width: 100%;
     height: 100%;
@@ -254,6 +253,7 @@
     .grid { grid-template-columns: repeat(auto-fill, minmax(128px, 1fr)); gap: 1.8rem 1.1rem; }
   }
 
+  /* ⚡️ 修复弹窗的自适应和可滚动样式 */
   #gateOverlay {
     position: fixed;
     inset: 0;
@@ -263,7 +263,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 1.5rem;
+    padding: 1rem;
   }
   #gateOverlay.hidden { display: none; }
   
@@ -271,8 +271,11 @@
     background: #F3EFE6;
     max-width: 450px;
     width: 100%;
+    max-height: 85vh;
+    display: flex;
+    flex-direction: column;
     border-radius: 16px;
-    padding: 2.2rem 2rem 2rem;
+    padding: 1.5rem 1.2rem 1.2rem;
     box-shadow: 0 20px 40px rgba(0,0,0,0.2);
     text-align: center;
     box-sizing: border-box;
@@ -280,22 +283,26 @@
 
   .gate-card h2 {
     font-family: 'Shippori Mincho', serif;
-    font-size: 1.35rem;
+    font-size: 1.2rem;
     font-weight: 700;
-    margin: 0 0 1.5rem;
+    margin: 0 0 1rem;
     color: #2C3E55;
     letter-spacing: 0.02em;
+    flex-shrink: 0;
   }
 
   .gate-content {
     text-align: center;
     font-size: 0.82rem;
-    line-height: 1.85;
+    line-height: 1.7;
     color: #555048;
-    margin-bottom: 1.8rem;
+    margin-bottom: 1.2rem;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-right: 0.2rem;
   }
 
-  .gate-content p { margin: 0 0 1.1rem 0; }
+  .gate-content p { margin: 0 0 0.9rem 0; }
   .gate-content p:last-child { margin-bottom: 0; }
 
   .gate-card button {
@@ -303,7 +310,7 @@
     color: #FFFFFF;
     border: none;
     border-radius: 8px;
-    padding: 0.75rem 2.8rem;
+    padding: 0.75rem 2rem;
     font-family: 'Zen Kaku Gothic New', sans-serif;
     font-weight: 700;
     font-size: 0.88rem;
@@ -311,6 +318,8 @@
     cursor: pointer;
     transition: background-color 0.2s ease, transform 0.1s ease;
     box-shadow: 0 4px 10px rgba(224, 109, 59, 0.25);
+    flex-shrink: 0;
+    margin-top: auto;
   }
 
   .gate-card button:hover { background: #C95B2A; }
@@ -379,7 +388,6 @@
     { number: 6, title: "ひらいていく子ども", cover: "https://cdn.pagepop.top/gcs/ai/gpt_image2/56592648/1785382492640_56592648_EiWxi.png", link: "https://xxzybdnet-oss.github.io/ehon-kan/ひらいていく子ども.html".normalize('NFD') },
     { number: 7, title: "ボールがつまった日", cover: "https://cdn.pagepop.top/gcs/ai/gpt_image2/56592648/1785212213051_56592648_WE3kG.png", link: "https://xxzybdnet-oss.github.io/ehon-kan/ボールがつまった日.html".normalize('NFD') },
     { number: 8, title: "ママはどうして泣くの？", cover: "https://cdn.pagepop.top/gcs/ai/gpt_image2/56366033/1785385463358_56366033_ITJRC.png", link: "https://xxzybdnet-oss.github.io/ehon-kan/ママはどうして泣くの？.html".normalize('NFD') },
-    // ⚡️ 只有 09 专属单独设置 objectPosition: "left center" 靠左裁切
     { number: 9, title: "今日のちいさな成長", cover: "https://cdn.pagepop.top/gcs/ai/gpt_image2/55856026/1785385878465_55856026_D0zEf.png", link: "https://xxzybdnet-oss.github.io/ehon-kan/今日のちいさな成長.html".normalize('NFD'), objectPosition: "left center" },
     { number: 10, title: "七月の再会", cover: "https://cdn.pagepop.top/gcs/ai/gpt_image2/55856026/1785386137271_55856026_IvmHr.png", link: "https://xxzybdnet-oss.github.io/ehon-kan/七月の再会.html".normalize('NFD') },
     { number: 11, title: "折纸、地震和小青虫", cover: "https://cdn.pagepop.top/gcs/ai/gpt_image2/56366033/1785212178232_56366033_H3S0C.png", link: "https://xxzybdnet-oss.github.io/ehon-kan/折纸、地震和小青虫.html".normalize('NFD') },
@@ -403,9 +411,8 @@
   { "number": 12, "title": "012《よみあげられた きおく》", "cover": "https://lh3.googleusercontent.com/d/1VpY12nyHq50Os3LmfiG3QdggdaTaOWy7", "link": "https://xxzybdnet-oss.github.io/ehon-kan/012.html".normalize('NFD') },
   { "number": 13, "title": "013《ちくちくことばが書いたにゅうよくざい》", "cover": "https://lh3.googleusercontent.com/d/1Lpx85fHs7pl09GGxgHn_jtdyyY6vXlOZ", "link": "https://xxzybdnet-oss.github.io/ehon-kan/013.html".normalize('NFD') },
   
-  // ⚡️ 014, 015, 016 指定取第 2 张图 (page: 2)
   { "number": 14, "title": "014《はじめての せかい》", "cover": "", "page": 2, "link": "https://xxzybdnet-oss.github.io/ehon-kan/014.html".normalize('NFD') },
-  { "number": 15, "title": "015《迷った朝（早上的未解之谜）》", "cover": "", "page": 2, "link": "https://xxzybdnet-oss.github.io/ehon-kan/015.html".normalize('NFD') },
+  { "number": 15, "title": "015《迷った朝（早上の未解之谜）》", "cover": "", "page": 2, "link": "https://xxzybdnet-oss.github.io/ehon-kan/015.html".normalize('NFD') },
   { "number": 16, "title": "016《あの日のバスケットきょうしつ》", "cover": "", "page": 2, "link": "https://xxzybdnet-oss.github.io/ehon-kan/016.html".normalize('NFD') },
   
   { "number": 17, "title": "017《ほうかごの きおく》", "cover": "https://lh3.googleusercontent.com/d/1vTlqMgz0iKG4V5tt9GaYGY6RNb9Pwm0g", "link": "https://xxzybdnet-oss.github.io/ehon-kan/017.html".normalize('NFD') },
@@ -416,7 +423,6 @@
   { "number": 21, "title": "021《那时天还没亮》", "cover": "", "page": 1, "link": "https://xxzybdnet-oss.github.io/ehon-kan/021.html".normalize('NFD') },
   { "number": 22, "title": "022《那台紫色相机》", "cover": "https://lh3.googleusercontent.com/d/17lhP14j9-RWwa-DJpK5NpA2qKtGAlNjW", "link": "https://xxzybdnet-oss.github.io/ehon-kan/022.html".normalize('NFD') },
   { "number": 23, "title": "023《雪地里抱起的小白》", "cover": "", "page": 1, "link": "https://xxzybdnet-oss.github.io/ehon-kan/023.html".normalize('NFD') },
-  // ⚡️ 024 指定取第 2 张图 (page: 2)
   { "number": 24, "title": "024《やさしいぼくのここまで》", "cover": "", "page": 2, "link": "https://xxzybdnet-oss.github.io/ehon-kan/024.html".normalize('NFD') }
 ];
 
