@@ -252,7 +252,6 @@
     .grid { grid-template-columns: repeat(auto-fill, minmax(128px, 1fr)); gap: 1.8rem 1.1rem; }
   }
 
-  /* ---- 入場時のおやくそくモーダル ---- */
   #gateOverlay {
     position: fixed;
     inset: 0;
@@ -294,13 +293,8 @@
     margin-bottom: 1.8rem;
   }
 
-  .gate-content p {
-    margin: 0 0 1.1rem 0;
-  }
-
-  .gate-content p:last-child {
-    margin-bottom: 0;
-  }
+  .gate-content p { margin: 0 0 1.1rem 0; }
+  .gate-content p:last-child { margin-bottom: 0; }
 
   .gate-card button {
     background: #E06D3B;
@@ -317,30 +311,21 @@
     box-shadow: 0 4px 10px rgba(224, 109, 59, 0.25);
   }
 
-  .gate-card button:hover {
-    background: #C95B2A;
-  }
-
-  .gate-card button:active {
-    transform: scale(0.98);
-  }
+  .gate-card button:hover { background: #C95B2A; }
+  .gate-card button:active { transform: scale(0.98); }
 </style>
 </head>
 <body>
 
-<!-- 入場提示窗口 -->
 <div id="gateOverlay">
   <div class="gate-card">
     <h2>🌱 小さな絵本館のおやくそく</h2>
     <div class="gate-content">
       <p>ようこそ、小さな森の中の絵本館へ。<br>
       ここには、日々の暮らしや子どもの成長、家族の思い出から生まれた物語たちが並んでいます。</p>
-      
       <p>一冊一冊の絵本は、大切な時間を残した小さな宝物です。</p>
-      
       <p>もし誰かに紹介したくなった時は、先にひとこと声をかけてもらえるとうれしいです。<br>
       また、こちらのURLや画像、文章などを、許可なく外部へ公開・転載することはご遠慮ください。</p>
-      
       <p>この小さな森を、一緒に大切に育てていただけたら幸せです。<br>
       いつでも安心して帰ってこられる、あたたかな場所でありますように。 🌱</p>
     </div>
@@ -359,7 +344,6 @@
 </header>
 
 <main>
-  <!-- 最新 14 本 -->
   <div class="section-divider" style="margin-top:0;">
     <div class="shelf-label">
       <div class="line reverse"></div>
@@ -370,7 +354,6 @@
   </div>
   <div class="grid" id="gridNew"></div>
 
-  <!-- 历史 24 本 -->
   <div class="section-divider">
     <div class="shelf-label">
       <div class="line reverse"></div>
@@ -403,155 +386,57 @@
   ];
 
   const archiveBooks = [
-  {
-    "number": 1,
-    "title": "001《青のりゆう》绘本全套4页 文本OK",
-    "cover": "https://lh3.googleusercontent.com/d/1TGHHXQw1r0y0rf0U63qwC8poFA15tZ3p",
-    "link": "https://xxzybdnet-oss.github.io/ehon-kan/001.html".normalize('NFD')
-  },
-  {
-    "number": 2,
-    "title": "002《石けんを食べるネズミ》绘本全套5页 文本OK",
-    "cover": "https://lh3.googleusercontent.com/d/1uXBaSXPsrwJk8ATD5YfAJGcdIwEN6lfm",
-    "link": "https://xxzybdnet-oss.github.io/ehon-kan/002.html".normalize('NFD')
-  },
-  {
-    "number": 3,
-    "title": "003《生まれ変わるとり》绘本全套7页 文本OK",
-    "cover": "https://lh3.googleusercontent.com/d/1zHD3eQFS0cjZMvEpNFJFrn-YR59aPf-Z",
-    "link": "https://xxzybdnet-oss.github.io/ehon-kan/003.html".normalize('NFD')
-  },
-  {
-    "number": 4,
-    "title": "004《３０万のねこちゃん》绘本全套9页 文本OK",
-    "cover": "https://lh3.googleusercontent.com/d/1pAMDWxrFQCFhle2T10G_29nlnlPFhV7U",
-    "link": "https://xxzybdnet-oss.github.io/ehon-kan/004.html".normalize('NFD')
-  },
-  {
-    "number": 5,
-    "title": "005《６才のまんてんかかい》绘本全套14页 文本OK",
-    "cover": "https://lh3.googleusercontent.com/d/1Wy0_wKSXG95Tyb_7bXqmvmayyPu6Tg8_",
-    "link": "https://xxzybdnet-oss.github.io/ehon-kan/005.html".normalize('NFD')
-  },
-  {
-    "number": 6,
-    "title": "006《初めてのおつかい》绘本全套16页 文本OK",
-    "cover": "https://lh3.googleusercontent.com/d/1NgMR9hOrOjd1ziwTf8UvCQtlHkfgjGLR",
-    "link": "https://xxzybdnet-oss.github.io/ehon-kan/006.html".normalize('NFD')
-  },
-  {
-    "number": 7,
-    "title": "007《冰格曼卡拉》绘本全套14页 文本OK",
-    "cover": "https://lh3.googleusercontent.com/d/1G8MZ-RN5qaock4Xvrwq7T4nuOIMpukBr",
-    "link": "https://xxzybdnet-oss.github.io/ehon-kan/007.html".normalize('NFD')
-  },
-  {
-    "number": 8,
-    "title": "008《子牛のいちにち》绘本全套12页 文本OK",
-    "cover": "https://lh3.googleusercontent.com/d/1pT2vFCGPNhq0Z8tQOxRQTtYWky4ceA51",
-    "link": "https://xxzybdnet-oss.github.io/ehon-kan/008.html".normalize('NFD')
-  },
-  {
-    "number": 9,
-    "title": "009《はじめてのおかね》绘本全套12页 文本OK",
-    "cover": "https://lh3.googleusercontent.com/d/1T3HwHB2KBDiCvHzMYtg4AQ8NEbeST_SX",
-    "link": "https://xxzybdnet-oss.github.io/ehon-kan/009.html".normalize('NFD')
-  },
-  {
-    "number": 10,
-    "title": "010《しずかな のう》绘本全套33页 文本OK",
-    "cover": "https://lh3.googleusercontent.com/d/1wGr1Adwh640XWgVnzvCKTmz0cO37Njga",
-    "link": "https://xxzybdnet-oss.github.io/ehon-kan/010.html".normalize('NFD')
-  },
-  {
-    "number": 11,
-    "title": "011《ひとりでがっこうへ》绘本全套30页 文本OK",
-    "cover": "https://lh3.googleusercontent.com/d/1qcxXI7hTgmDbHcGfGhU8X59Ya_q4ABeH",
-    "link": "https://xxzybdnet-oss.github.io/ehon-kan/011.html".normalize('NFD')
-  },
-  {
-    "number": 12,
-    "title": "012《よみあげられた きおく》全32页 文本OK",
-    "cover": "https://lh3.googleusercontent.com/d/1VpY12nyHq50Os3LmfiG3QdggdaTaOWy7",
-    "link": "https://xxzybdnet-oss.github.io/ehon-kan/012.html".normalize('NFD')
-  },
-  {
-    "number": 13,
-    "title": "013《ちくちくことばが書いたにゅうよくざい》绘本全套32页 文本OK",
-    "cover": "https://lh3.googleusercontent.com/d/1Lpx85fHs7pl09GGxgHn_jtdyyY6vXlOZ",
-    "link": "https://xxzybdnet-oss.github.io/ehon-kan/013.html".normalize('NFD')
-  },
-  {
-    "number": 14,
-    "title": "014《はじめての せかい》绘本全套33页  开页版整理中",
-    "cover": "https://lh3.googleusercontent.com/d/1yjRKdj9N-7zdqbwj0HzOdhQlLDCxrPcl",
-    "link": "https://xxzybdnet-oss.github.io/ehon-kan/014.html".normalize('NFD')
-  },
-  {
-    "number": 15,
-    "title": "015《迷った朝（早上的未解之谜）》绘本全套33页 开页版整理中",
-    "cover": "https://lh3.googleusercontent.com/d/10mhNcTreYEQSSKcOP_NvnqkVY8GxbkRu",
-    "link": "https://xxzybdnet-oss.github.io/ehon-kan/015.html".normalize('NFD')
-  },
-  {
-    "number": 16,
-    "title": "016《あの日のバスケットきょうしつ》绘本全套36页 开页版整理中",
-    "cover": "https://lh3.googleusercontent.com/d/11ZbndLAADiTv0wzqO68pdhoKnQi8x0sD",
-    "link": "https://xxzybdnet-oss.github.io/ehon-kan/016.html".normalize('NFD')
-  },
-  {
-    "number": 17,
-    "title": "017《ほうかごの きおく》绘本全套35页  开页版整理中",
-    "cover": "https://lh3.googleusercontent.com/d/1vTlqMgz0iKG4V5tt9GaYGY6RNb9Pwm0g",
-    "link": "https://xxzybdnet-oss.github.io/ehon-kan/017.html".normalize('NFD')
-  },
-  {
-    "number": 18,
-    "title": "018《ふあんのなかであいしつづける》绘本全套34页 开页版整理中",
-    "cover": "https://lh3.googleusercontent.com/d/1C9kQuTVn64Seib2tmDqOGecpynQvEtVY",
-    "link": "https://xxzybdnet-oss.github.io/ehon-kan/018.html".normalize('NFD')
-  },
-  {
-    "number": 19,
-    "title": "019《各自相遇的孩子们》绘本全套33页 开页版整理中",
-    "cover": "https://lh3.googleusercontent.com/d/1Q2AqRCfffMkTUZ5OMSxn1XrJ5swXaGe9",
-    "link": "https://xxzybdnet-oss.github.io/ehon-kan/019.html".normalize('NFD')
-  },
-  {
-    "number": 20,
-    "title": "020《ママとぼくの本》绘本全套33页 开页版整理中",
-    "cover": "https://lh3.googleusercontent.com/d/1gBpvHHk4MOlYEVwe9R9o8RPzxvzEGR4b",
-    "link": "https://xxzybdnet-oss.github.io/ehon-kan/020.html".normalize('NFD')
-  },
-  {
-    "number": 21,
-    "title": "021《那时天还没亮》绘本全套35页 开页版整理中",
-    "cover": "https://lh3.googleusercontent.com/d/1zYkXG3t1SoeXpWuKRRVGnO4IQqmTBguA",
-    "link": "https://xxzybdnet-oss.github.io/ehon-kan/021.html".normalize('NFD')
-  },
-  {
-    "number": 22,
-    "title": "022《那台紫色相机》绘本全套34页 开页版整理中",
-    "cover": "https://lh3.googleusercontent.com/d/17lhP14j9-RWwa-DJpK5NpA2qKtGAlNjW",
-    "link": "https://xxzybdnet-oss.github.io/ehon-kan/022.html".normalize('NFD')
-  },
-  {
-    "number": 23,
-    "title": "023《雪地里抱起的小白》绘本全套39页 开页版整理中",
-    "cover": "https://lh3.googleusercontent.com/d/1Oeb4qkkIhjrGpey1VjDdut3e3SbUTIC0",
-    "link": "https://xxzybdnet-oss.github.io/ehon-kan/023.html".normalize('NFD')
-  },
-  {
-    "number": 24,
-    "title": "024《やさしいぼくのここまで》  33页 开页版整理中",
-    "cover": "https://lh3.googleusercontent.com/d/1i8ARLldwAn-lnPtDz_rzvHQIvXhzoXDa",
-    "link": "https://xxzybdnet-oss.github.io/ehon-kan/024.html".normalize('NFD')
-  }
+  { "number": 1, "title": "001《青のりゆう》", "cover": "https://lh3.googleusercontent.com/d/1TGHHXQw1r0y0rf0U63qwC8poFA15tZ3p", "link": "https://xxzybdnet-oss.github.io/ehon-kan/001.html".normalize('NFD') },
+  { "number": 2, "title": "002《石けんを食べるネズミ》", "cover": "https://lh3.googleusercontent.com/d/1uXBaSXPsrwJk8ATD5YfAJGcdIwEN6lfm", "link": "https://xxzybdnet-oss.github.io/ehon-kan/002.html".normalize('NFD') },
+  { "number": 3, "title": "003《生まれ変わるとり》", "cover": "https://lh3.googleusercontent.com/d/1zHD3eQFS0cjZMvEpNFJFrn-YR59aPf-Z", "link": "https://xxzybdnet-oss.github.io/ehon-kan/003.html".normalize('NFD') },
+  { "number": 4, "title": "004《３０万のねこちゃん》", "cover": "https://lh3.googleusercontent.com/d/1pAMDWxrFQCFhle2T10G_29nlnlPFhV7U", "link": "https://xxzybdnet-oss.github.io/ehon-kan/004.html".normalize('NFD') },
+  { "number": 5, "title": "005《６才のまんてんかかい》", "cover": "https://lh3.googleusercontent.com/d/1Wy0_wKSXG95Tyb_7bXqmvmayyPu6Tg8_", "link": "https://xxzybdnet-oss.github.io/ehon-kan/005.html".normalize('NFD') },
+  { "number": 6, "title": "006《初めてのおつかい》", "cover": "https://lh3.googleusercontent.com/d/1NgMR9hOrOjd1ziwTf8UvCQtlHkfgjGLR", "link": "https://xxzybdnet-oss.github.io/ehon-kan/006.html".normalize('NFD') },
+  { "number": 7, "title": "007《冰格曼卡拉》", "cover": "https://lh3.googleusercontent.com/d/1G8MZ-RN5qaock4Xvrwq7T4nuOIMpukBr", "link": "https://xxzybdnet-oss.github.io/ehon-kan/007.html".normalize('NFD') },
+  { "number": 8, "title": "008《子牛のいちにち》", "cover": "https://lh3.googleusercontent.com/d/1pT2vFCGPNhq0Z8tQOxRQTtYWky4ceA51", "link": "https://xxzybdnet-oss.github.io/ehon-kan/008.html".normalize('NFD') },
+  { "number": 9, "title": "009《はじめてのおかね》", "cover": "https://lh3.googleusercontent.com/d/1T3HwHB2KBDiCvHzMYtg4AQ8NEbeST_SX", "link": "https://xxzybdnet-oss.github.io/ehon-kan/009.html".normalize('NFD') },
+  { "number": 10, "title": "010《しずかな のう》", "cover": "https://lh3.googleusercontent.com/d/1wGr1Adwh640XWgVnzvCKTmz0cO37Njga", "link": "https://xxzybdnet-oss.github.io/ehon-kan/010.html".normalize('NFD') },
+  { "number": 11, "title": "011《ひとりでがっこうへ》", "cover": "https://lh3.googleusercontent.com/d/1qcxXI7hTgmDbHcGfGhU8X59Ya_q4ABeH", "link": "https://xxzybdnet-oss.github.io/ehon-kan/011.html".normalize('NFD') },
+  { "number": 12, "title": "012《よみあげられた きおく》", "cover": "https://lh3.googleusercontent.com/d/1VpY12nyHq50Os3LmfiG3QdggdaTaOWy7", "link": "https://xxzybdnet-oss.github.io/ehon-kan/012.html".normalize('NFD') },
+  { "number": 13, "title": "013《ちくちくことばが書いたにゅうよくざい》", "cover": "https://lh3.googleusercontent.com/d/1Lpx85fHs7pl09GGxgHn_jtdyyY6vXlOZ", "link": "https://xxzybdnet-oss.github.io/ehon-kan/013.html".normalize('NFD') },
+  { "number": 14, "title": "014《はじめての せかい》", "cover": "https://lh3.googleusercontent.com/d/1yjRKdj9N-7zdqbwj0HzOdhQlLDCxrPcl", "link": "https://xxzybdnet-oss.github.io/ehon-kan/014.html".normalize('NFD') },
+  { "number": 15, "title": "015《迷った朝（早上的未解之谜）》", "cover": "https://lh3.googleusercontent.com/d/10mhNcTreYEQSSKcOP_NvnqkVY8GxbkRu", "link": "https://xxzybdnet-oss.github.io/ehon-kan/015.html".normalize('NFD') },
+  { "number": 16, "title": "016《あの日のバスケットきょうしつ》", "cover": "https://lh3.googleusercontent.com/d/11ZbndLAADiTv0wzqO68pdhoKnQi8x0sD", "link": "https://xxzybdnet-oss.github.io/ehon-kan/016.html".normalize('NFD') },
+  { "number": 17, "title": "017《ほうかごの きおく》", "cover": "https://lh3.googleusercontent.com/d/1vTlqMgz0iKG4V5tt9GaYGY6RNb9Pwm0g", "link": "https://xxzybdnet-oss.github.io/ehon-kan/017.html".normalize('NFD') },
+  { "number": 18, "title": "018《ふあんのなかであいしつづける》", "cover": "https://lh3.googleusercontent.com/d/1C9kQuTVn64Seib2tmDqOGecpynQvEtVY", "link": "https://xxzybdnet-oss.github.io/ehon-kan/018.html".normalize('NFD') },
+  { "number": 19, "title": "019《各自相遇的孩子们》", "cover": "https://lh3.googleusercontent.com/d/1Q2AqRCfffMkTUZ5OMSxn1XrJ5swXaGe9", "link": "https://xxzybdnet-oss.github.io/ehon-kan/019.html".normalize('NFD') },
+  { "number": 20, "title": "020《ママとぼくの本》", "cover": "https://lh3.googleusercontent.com/d/1gBpvHHk4MOlYEVwe9R9o8RPzxvzEGR4b", "link": "https://xxzybdnet-oss.github.io/ehon-kan/020.html".normalize('NFD') },
+  
+  // ⚡️ 021 和 023 的 cover 留空 ""，开启自动获取
+  { "number": 21, "title": "021《那时天还没亮》", "cover": "", "link": "https://xxzybdnet-oss.github.io/ehon-kan/021.html".normalize('NFD') },
+  { "number": 22, "title": "022《那台紫色相机》", "cover": "https://lh3.googleusercontent.com/d/17lhP14j9-RWwa-DJpK5NpA2qKtGAlNjW", "link": "https://xxzybdnet-oss.github.io/ehon-kan/022.html".normalize('NFD') },
+  { "number": 23, "title": "023《雪地里抱起的小白》", "cover": "", "link": "https://xxzybdnet-oss.github.io/ehon-kan/023.html".normalize('NFD') },
+  { "number": 24, "title": "024《やさしいぼくのここまで》", "cover": "https://lh3.googleusercontent.com/d/1i8ARLldwAn-lnPtDz_rzvHQIvXhzoXDa", "link": "https://xxzybdnet-oss.github.io/ehon-kan/024.html".normalize('NFD') }
 ];
+
+  // 核心逻辑：如果 cover 为空，就去请求 link 的 HTML，截取第一张图
+  async function fetchFirstImage(htmlUrl) {
+    try {
+      const res = await fetch(htmlUrl);
+      if (!res.ok) return '';
+      const text = await res.text();
+      // 正则匹配 "num": 1 后的 "src": "..."
+      const match = text.match(/"num"\s*:\s*1\s*,\s*"caption"[^}]*?"src"\s*:\s*"([^"]+)"/);
+      if (match && match[1]) {
+        return match[1];
+      }
+      // 备用正则：匹配包含 googleusercontent 的第一个图片链接
+      const fallback = text.match(/https:\/\/lh3\.googleusercontent\.com\/d\/[a-zA-Z0-9_-]+/);
+      return fallback ? fallback[0] : '';
+    } catch (e) {
+      console.error('Fetch cover error:', e);
+      return '';
+    }
+  }
 
   function renderGrid(containerId, books, tagClass = '') {
     const container = document.getElementById(containerId);
-    books.forEach(book => {
+    books.forEach(async (book) => {
       const a = document.createElement('a');
       a.className = 'book';
       a.href = book.link || '#';
@@ -560,16 +445,27 @@
         a.rel = 'noopener noreferrer';
       }
 
+      const imgId = `cover-img-${tagClass}-${book.number}`;
+
       a.innerHTML = `
         <div class="book-card">
           <div class="cover-wrap">
             <span class="vol-tag ${tagClass}">vol.${String(book.number).padStart(2,'0')}</span>
-            <img src="${book.cover}" alt="${book.title}の表紙" loading="lazy">
+            <img id="${imgId}" src="${book.cover || ''}" alt="${book.title}の表紙" loading="lazy">
           </div>
         </div>
         <div class="book-title"><span class="num">${String(book.number).padStart(2,'0')}</span>${book.title}</div>
       `;
       container.appendChild(a);
+
+      // 如果 cover 没有填，自动去 fetch 提取第一张图
+      if (!book.cover && book.link) {
+        const autoCover = await fetchFirstImage(book.link);
+        if (autoCover) {
+          const imgEl = document.getElementById(imgId);
+          if (imgEl) imgEl.src = autoCover;
+        }
+      }
     });
   }
 
@@ -578,7 +474,7 @@
   renderGrid('gridNew', newBooks);
   renderGrid('gridArchive', archiveBooks, 'archive');
 
-  // ---- 入場提示窗口控制逻辑 ----
+  // 入场弹窗
   (function(){
     var overlay = document.getElementById('gateOverlay');
     var okBtn = document.getElementById('gateOkBtn');
