@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>022《那台紫色相机》绘本全套34页 开页版整理中 - せかい君への絵本集</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #EAE3D4;
+    --paper-deep: #DED4BF;
+    --ink: #26221C;
+    --indigo: #2B4570;
+    --indigo-deep: #1C2E4A;
+    --persimmon: #D96C3F;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin:0;
+    background:
+      radial-gradient(circle at 15% 6%, rgba(201,162,75,0.10), transparent 40%),
+      radial-gradient(circle at 85% 92%, rgba(43,69,112,0.08), transparent 45%),
+      var(--paper);
+    color: var(--ink);
+    font-family: 'Zen Kaku Gothic New', 'Hiragino Sans', sans-serif;
+  }
+
+  header {
+    text-align:center;
+    padding: 4.2rem 6vw 3rem;
+    border-bottom: 1px solid rgba(38,34,28,0.12);
+  }
+  .eyebrow {
+    font-size:0.75rem;
+    letter-spacing:0.32em;
+    color: var(--indigo);
+    text-transform: uppercase;
+    font-weight:700;
+    margin:0 0 1rem;
+  }
+  h1 {
+    font-family:'Shippori Mincho', serif;
+    font-weight:700;
+    font-size: clamp(2rem, 5.5vw, 3.4rem);
+    margin:0 0 0.6rem;
+  }
+  .sub {
+    color: rgba(38,34,28,0.6);
+    font-size:0.95rem;
+    margin:0;
+  }
+  .progress {
+    position: sticky;
+    top:0;
+    z-index: 5;
+    background: rgba(234,227,212,0.88);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid rgba(38,34,28,0.1);
+    padding: 0.55rem 0;
+    text-align:center;
+    font-size:0.72rem;
+    letter-spacing:0.1em;
+    color: var(--indigo-deep);
+  }
+  #progressFill {
+    color: var(--persimmon);
+    font-family:'Shippori Mincho', serif;
+    font-weight:700;
+  }
+
+  main {
+    max-width: clamp(360px, 78vw, 1200px);
+    margin: 0 auto;
+    padding: 3rem 5vw 6rem;
+    display:flex;
+    flex-direction: column;
+    gap: 3.4rem;
+  }
+
+  .page {
+    scroll-margin-top: 4rem;
+  }
+  .tag {
+    display:flex;
+    align-items:center;
+    gap:0.7rem;
+    margin-bottom:0.8rem;
+  }
+  .tag .num {
+    font-family:'Shippori Mincho', serif;
+    font-weight:700;
+    color: var(--persimmon);
+    font-size:1rem;
+    min-width: 2.4rem;
+  }
+  .tag .label {
+    font-size:0.82rem;
+    color: rgba(38,34,28,0.65);
+    letter-spacing:0.03em;
+  }
+  .frame {
+    border-radius: 6px;
+    overflow:hidden;
+    box-shadow:
+      0 14px 28px -16px rgba(28,46,74,0.4),
+      0 3px 8px rgba(28,46,74,0.15);
+    background: linear-gradient(160deg, var(--indigo), var(--indigo-deep));
+  }
+  .frame img {
+    width:100%;
+    display:block;
+  }
+
+  footer {
+    text-align:center;
+    padding: 3rem 6vw 4rem;
+    color: rgba(38,34,28,0.45);
+    font-size:0.78rem;
+    letter-spacing:0.04em;
+    border-top: 1px solid rgba(38,34,28,0.1);
+  }
+
+  #toTop {
+    position: fixed;
+    right: 1.4rem;
+    bottom: 1.4rem;
+    width: 2.6rem;
+    height: 2.6rem;
+    border-radius: 50%;
+    background: var(--indigo);
+    color: var(--paper);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-decoration:none;
+    font-size:1.1rem;
+    box-shadow: 0 8px 18px -6px rgba(28,46,74,0.5);
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    pointer-events: none;
+  }
+  #toTop.show { opacity:1; transform:translateY(0); pointer-events:auto; }
+</style>
+</head>
+<body>
+
+<div class="progress">
+  <span id="progressFill">1</span> / <span id="progressTotal">50</span> ページ
+</div>
+
+<header>
+  <p class="eyebrow">Picture Book</p>
+  <h1>022《那台紫色相机》绘本全套34页 开页版整理中</h1>
+  <p class="sub">せかい君への絵本集（全50ページ）</p>
+</header>
+
+<main id="main"></main>
+
+<footer id="siteFooter">© 2026 せかい君への絵本集</footer>
+
+<a href="#top" id="toTop" aria-label="トップへ戻る">↑</a>
+
+<script>
+  const pages = [
+  {
+    "type": "page",
+    "num": 1,
+    "caption": "022_1ページ",
+    "src": "https://lh3.googleusercontent.com/d/17lhP14j9-RWwa-DJpK5NpA2qKtGAlNjW"
+  },
+  {
+    "type": "page",
+    "num": 2,
+    "caption": "022_2ページ",
+    "src": "https://lh3.googleusercontent.com/d/1KOyGoNGpJdIN1OlbTjCwCnthuB1uU0HC"
+  },
+  {
+    "type": "page",
+    "num": 3,
+    "caption": "022_3ページ",
+    "src": "https://lh3.googleusercontent.com/d/1ScHe4yBUbn6W7eH3B28_8JcpLgasmw1e"
+  },
+  {
+    "type": "page",
+    "num": 4,
+    "caption": "022_4ページ",
+    "src": "https://lh3.googleusercontent.com/d/1Jh3JvB78LcFiiTkzvFEEky0izOvl0l5z"
+  },
+  {
+    "type": "page",
+    "num": 5,
+    "caption": "022_5ページ",
+    "src": "https://lh3.googleusercontent.com/d/1ghHctHR-k8STOlFE-pJ-S9iUrs-xOa1Z"
+  },
+  {
+    "type": "page",
+    "num": 6,
+    "caption": "022_6ページ",
+    "src": "https://lh3.googleusercontent.com/d/1NZ2Wxc-4okM1hGNbZyXO4ikWR4DXPU22"
+  },
+  {
+    "type": "page",
+    "num": 7,
+    "caption": "022_7ページ",
+    "src": "https://lh3.googleusercontent.com/d/19DBMh_jAClYwXUIQknPsssh9zYabPEpL"
+  },
+  {
+    "type": "page",
+    "num": 8,
+    "caption": "022_8ページ",
+    "src": "https://lh3.googleusercontent.com/d/1pedRB6or57zCmyaOHQ4eoxCES31fkPXs"
+  },
+  {
+    "type": "page",
+    "num": 9,
+    "caption": "022_9ページ",
+    "src": "https://lh3.googleusercontent.com/d/14hmwlTW8CZrmWIhXAB9Llp8brUilRqyO"
+  },
+  {
+    "type": "page",
+    "num": 10,
+    "caption": "022_10ページ",
+    "src": "https://lh3.googleusercontent.com/d/1w_kFtjP-FlESxSRec8zke5_wE4LiIbhE"
+  },
+  {
+    "type": "page",
+    "num": 11,
+    "caption": "022_11ページ",
+    "src": "https://lh3.googleusercontent.com/d/1NxsPeEVRjSo-TzQpGagJh7uX9KpMSq_g"
+  },
+  {
+    "type": "page",
+    "num": 12,
+    "caption": "022_12ページ",
+    "src": "https://lh3.googleusercontent.com/d/1LJuJGuOFBZzOgVE_gLvs9l4sim2mS4_X"
+  },
+  {
+    "type": "page",
+    "num": 13,
+    "caption": "022_13ページ",
+    "src": "https://lh3.googleusercontent.com/d/1KrcaTgGCXn8yA8CedeiIRZhq7uJENL9w"
+  },
+  {
+    "type": "page",
+    "num": 14,
+    "caption": "022_14ページ",
+    "src": "https://lh3.googleusercontent.com/d/1ehBge2JE3KIrNBbDH_yS-e1xt6S4wlwJ"
+  },
+  {
+    "type": "page",
+    "num": 15,
+    "caption": "022_15ページ",
+    "src": "https://lh3.googleusercontent.com/d/1DILvx03sbomePrEdpsPznyBj_s6ma4gw"
+  },
+  {
+    "type": "page",
+    "num": 16,
+    "caption": "022_16ページ",
+    "src": "https://lh3.googleusercontent.com/d/1x1spxNTs1PzKWHXleJNrbOzPw7FIi1VP"
+  },
+  {
+    "type": "page",
+    "num": 17,
+    "caption": "022_17ページ",
+    "src": "https://lh3.googleusercontent.com/d/15msUl8qMHhKGC6NTAae52EsiIVtuDrLq"
+  },
+  {
+    "type": "page",
+    "num": 18,
+    "caption": "022_18ページ",
+    "src": "https://lh3.googleusercontent.com/d/1H5honkKG6U-ADIdNTUjHw2Wq3OYaeyvG"
+  },
+  {
+    "type": "page",
+    "num": 19,
+    "caption": "022_19ページ",
+    "src": "https://lh3.googleusercontent.com/d/1T9u8zYp7tkvmESXq9hB2IKDPMTpkyCFQ"
+  },
+  {
+    "type": "page",
+    "num": 20,
+    "caption": "022_20ページ",
+    "src": "https://lh3.googleusercontent.com/d/1pfO8g0WoM0A-HUr00R9CKDhIFsEZ65TZ"
+  },
+  {
+    "type": "page",
+    "num": 21,
+    "caption": "022_21ページ",
+    "src": "https://lh3.googleusercontent.com/d/1SDLzg3fPNye9G59PVvIbI0bCGt2wWKug"
+  },
+  {
+    "type": "page",
+    "num": 22,
+    "caption": "022_22ページ",
+    "src": "https://lh3.googleusercontent.com/d/1zTvv55jxAvy_0m2XlVzZQM5kFM7PytqH"
+  },
+  {
+    "type": "page",
+    "num": 23,
+    "caption": "022_23ページ",
+    "src": "https://lh3.googleusercontent.com/d/1ONZ1OnPEOblUxUOejzlhiWI6dF4_-BDD"
+  },
+  {
+    "type": "page",
+    "num": 24,
+    "caption": "022_24ページ",
+    "src": "https://lh3.googleusercontent.com/d/1k1f25HgPrixKtl5tOJ_wUyeikDlc5j-p"
+  },
+  {
+    "type": "page",
+    "num": 25,
+    "caption": "022_25ページ",
+    "src": "https://lh3.googleusercontent.com/d/1T0SDpRIgMCv1kxK29_dciGKiMzIG0Efw"
+  },
+  {
+    "type": "page",
+    "num": 26,
+    "caption": "022_26ページ",
+    "src": "https://lh3.googleusercontent.com/d/1jUB8rSvyxvd-ti48cGA_BcUZOKfFuz_b"
+  },
+  {
+    "type": "page",
+    "num": 27,
+    "caption": "022_27ページ",
+    "src": "https://lh3.googleusercontent.com/d/1lBqdT_EcMeBz_rUozpWGrVzawOc1uDz4"
+  },
+  {
+    "type": "page",
+    "num": 28,
+    "caption": "022_28ページ",
+    "src": "https://lh3.googleusercontent.com/d/1jAY-V75mJz_rXSD1dsbLEjhJggrwEqOu"
+  },
+  {
+    "type": "page",
+    "num": 29,
+    "caption": "022_29ページ",
+    "src": "https://lh3.googleusercontent.com/d/1F2zHJDJEL0U_oOj-LRmKmwY4BdXBCgYf"
+  },
+  {
+    "type": "page",
+    "num": 30,
+    "caption": "022_30ページ",
+    "src": "https://lh3.googleusercontent.com/d/1HVqNLFWsr3YnKuaD8vwatVRp8HinM1Ar"
+  },
+  {
+    "type": "page",
+    "num": 31,
+    "caption": "022_31ページ",
+    "src": "https://lh3.googleusercontent.com/d/1NSOpHTDp9ZcnKA_YRxY8f_318f2HqoUm"
+  },
+  {
+    "type": "page",
+    "num": 32,
+    "caption": "022_32ページ",
+    "src": "https://lh3.googleusercontent.com/d/1222jbq0-yOumFZ6Ib6MkQwmvXDbTqmkR"
+  },
+  {
+    "type": "page",
+    "num": 33,
+    "caption": "022_33ページ",
+    "src": "https://lh3.googleusercontent.com/d/1lJ2nNtlgtpsbOw7rowtioarSJnoqBD64"
+  },
+  {
+    "type": "page",
+    "num": 34,
+    "caption": "022_34ページ",
+    "src": "https://lh3.googleusercontent.com/d/1LwQgI8Yrdo-NH72ivpEShvc0vYwiCScd"
+  },
+  {
+    "type": "page",
+    "num": 35,
+    "caption": "022_35ページ",
+    "src": "https://lh3.googleusercontent.com/d/1GDEEOX6GUmG083ymbtxxU7m6jrverxpI"
+  },
+  {
+    "type": "page",
+    "num": 36,
+    "caption": "022_36ページ",
+    "src": "https://lh3.googleusercontent.com/d/1DIg27UtvNyVUienh3aLXL_sRDqU23zXf"
+  },
+  {
+    "type": "page",
+    "num": 37,
+    "caption": "022_37ページ",
+    "src": "https://lh3.googleusercontent.com/d/1wz8bW82EjwtBE_B0C7Sn0BHtixeKiFps"
+  },
+  {
+    "type": "page",
+    "num": 38,
+    "caption": "022_38ページ",
+    "src": "https://lh3.googleusercontent.com/d/1QkylgoXIAL6F17XdhzB4LoQig4z7n3hw"
+  },
+  {
+    "type": "page",
+    "num": 39,
+    "caption": "022_39ページ",
+    "src": "https://lh3.googleusercontent.com/d/1rXDSX_4LP5Z0zba20Gz6ufrMxgpoVl1f"
+  },
+  {
+    "type": "page",
+    "num": 40,
+    "caption": "022_40ページ",
+    "src": "https://lh3.googleusercontent.com/d/18JBfRyaEliTTa12eMTQUVTkgkdSbAidb"
+  },
+  {
+    "type": "page",
+    "num": 41,
+    "caption": "022_41ページ",
+    "src": "https://lh3.googleusercontent.com/d/1D0pDj4bIYqkFOdOAMrQ2z8rSOYMwWhrr"
+  },
+  {
+    "type": "page",
+    "num": 42,
+    "caption": "022_42ページ",
+    "src": "https://lh3.googleusercontent.com/d/1KY7oRHvI0eWWGn2hSpn8g9sXMe19pb7a"
+  },
+  {
+    "type": "page",
+    "num": 43,
+    "caption": "022_43ページ",
+    "src": "https://lh3.googleusercontent.com/d/1EElA2Nkkp-f6fYbrM9v861g3WsMgLbN2"
+  },
+  {
+    "type": "page",
+    "num": 44,
+    "caption": "022_44ページ",
+    "src": "https://lh3.googleusercontent.com/d/1TGnNEIPEkJLulG8dzPi6ACnDNhh7iq37"
+  },
+  {
+    "type": "page",
+    "num": 45,
+    "caption": "022_45ページ",
+    "src": "https://lh3.googleusercontent.com/d/1nEjTlPFKKPprJYQYGZROiyczSogAmb8P"
+  },
+  {
+    "type": "page",
+    "num": 46,
+    "caption": "022_46ページ",
+    "src": "https://lh3.googleusercontent.com/d/1iAze7S_s9q8Ja8PnKrjFnmWC0sneoF-L"
+  },
+  {
+    "type": "page",
+    "num": 47,
+    "caption": "022_47ページ",
+    "src": "https://lh3.googleusercontent.com/d/1jfVXqB9-F5zyb13e7CbbTHVMaiKR04za"
+  },
+  {
+    "type": "page",
+    "num": 48,
+    "caption": "022_48ページ",
+    "src": "https://lh3.googleusercontent.com/d/1E9V-EBheumu8vhArpLqT8hp3bDtZ3Nvd"
+  },
+  {
+    "type": "page",
+    "num": 49,
+    "caption": "022_49ページ",
+    "src": "https://lh3.googleusercontent.com/d/1udtq2RXG32sUqv6MxHaDg0zG9XmcMDW9"
+  },
+  {
+    "type": "page",
+    "num": 50,
+    "caption": "022_50ページ",
+    "src": "https://lh3.googleusercontent.com/d/1-iLpRVaTBlAzRvy9pJod-8b-9tOePmJb"
+  }
+];
+
+  const main = document.getElementById('main');
+
+  pages.forEach((p, i) => {
+    const sec = document.createElement('section');
+    sec.className = 'page';
+    if (i === 0) sec.id = 'top';
+
+    const labelText = `📖 P${p.num}` + (p.caption ? ' ' + p.caption : '');
+    const numLabel = String(p.num).padStart(2, '0');
+
+    sec.innerHTML = `
+      <div class="tag"><span class="num">${numLabel}</span><span class="label">${labelText}</span></div>
+      <div class="frame"><img src="${p.src}" alt="${labelText}" loading="lazy"></div>
+    `;
+    main.appendChild(sec);
+  });
+
+  document.getElementById('progressTotal').textContent = pages.length;
+
+  const sections = Array.from(document.querySelectorAll('.page'));
+  const progressFill = document.getElementById('progressFill');
+  const toTop = document.getElementById('toTop');
+
+  function updateProgress(){
+    let current = 1;
+    for (let i = 0; i < sections.length; i++){
+      const rect = sections[i].getBoundingClientRect();
+      if (rect.top < window.innerHeight * 0.5) current = i + 1;
+    }
+    progressFill.textContent = current;
+    toTop.classList.toggle('show', window.scrollY > 400);
+  }
+  document.addEventListener('scroll', updateProgress, { passive: true });
+  updateProgress();
+</script>
+
+</body>
+</html>
