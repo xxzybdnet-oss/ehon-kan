@@ -223,6 +223,11 @@
     background: rgba(217, 108, 63, 0.75);
   }
 
+  .vol-tag.draft {
+    background: rgba(80, 80, 80, 0.85);
+    border: 1px dashed rgba(255,255,255,0.4);
+  }
+
   .book-title {
     margin-top: 0.75rem;
     font-size: 0.86rem;
@@ -248,12 +253,25 @@
     border-top: 1px solid rgba(38,34,28,0.1);
   }
 
+  .admin-login-btn {
+    background: none;
+    border: none;
+    color: rgba(38, 34, 28, 0.35);
+    font-size: 0.72rem;
+    cursor: pointer;
+    margin-top: 0.8rem;
+    text-decoration: underline;
+    transition: color 0.2s ease;
+  }
+  .admin-login-btn:hover {
+    color: var(--indigo);
+  }
+
   @media (max-width: 480px) {
     header { padding: 3.6rem 6vw 3rem; }
     .grid { grid-template-columns: repeat(auto-fill, minmax(128px, 1fr)); gap: 1.8rem 1.1rem; }
   }
 
-  /* ⚡️ 修复弹窗的自适应和可滚动样式 */
   #gateOverlay {
     position: fixed;
     inset: 0;
@@ -376,9 +394,18 @@
   <div class="grid" id="gridArchive"></div>
 </main>
 
-<footer>© せかい君と、ママの記録 · この本棚はゆっくり増えていきます</footer>
+<footer>
+  © せかい君と、ママの記録 · この本棚はゆっくり増えていきます
+  <div>
+    <button id="adminLoginBtn" class="admin-login-btn">🔑 管理員ログイン</button>
+  </div>
+</footer>
 
 <script>
+  // 🔑 管理员密码
+  const ADMIN_PASSWORD = "123456";
+
+  // 🌟 完全保留你原始文件里的 newBooks（全部公开）
   const newBooks = [
     { number: 1, title: "わたしのルール", cover: "https://cdn.pagepop.top/gcs/ai/gpt_image2/56592648/1785497750953_56592648_dmmmp.png", link: "https://img-volc.jianpian.info/super/markdown_injector/ai_resource/56592648/1785498917297_56592648_40SCV.html" },
     { number: 2, title: "筆箱と三羽の小鳥と六歳の土曜日", cover: "https://cdn.pagepop.top/gcs/ai/gpt_image2/56592648/1785496027874_56592648_U3aNL.png", link: "https://xxzybdnet-oss.github.io/ehon-kan/筆箱と三羽の小鳥と六歳の土曜日.html".normalize('NFD') },
@@ -396,35 +423,49 @@
     { number: 14, title: "連休のさざなみ", cover: "https://cdn.pagepop.top/gcs/ai/gpt_image2/55936696/1785385552383_55936696_RAEyt.png", link: "https://xxzybdnet-oss.github.io/ehon-kan/連休のさざなみ.html".normalize('NFD') }
   ];
 
+  // 📜 完全保留你原始文件里的 archiveBooks（包含 014, 015, 016, 021, 023, 024 等全部正常项）
   const archiveBooks = [
-  { "number": 1, "title": "001《青のりゆう》", "cover": "https://lh3.googleusercontent.com/d/1TGHHXQw1r0y0rf0U63qwC8poFA15tZ3p", "link": "https://xxzybdnet-oss.github.io/ehon-kan/001.html".normalize('NFD') },
-  { "number": 2, "title": "002《石けんを食べるネズミ》", "cover": "https://lh3.googleusercontent.com/d/1uXBaSXPsrwJk8ATD5YfAJGcdIwEN6lfm", "link": "https://xxzybdnet-oss.github.io/ehon-kan/002.html".normalize('NFD') },
-  { "number": 3, "title": "003《生まれ変わるとり》", "cover": "https://lh3.googleusercontent.com/d/1zHD3eQFS0cjZMvEpNFJFrn-YR59aPf-Z", "link": "https://xxzybdnet-oss.github.io/ehon-kan/003.html".normalize('NFD') },
-  { "number": 4, "title": "004《３０万のねこちゃん》", "cover": "https://lh3.googleusercontent.com/d/1pAMDWxrFQCFhle2T10G_29nlnlPFhV7U", "link": "https://xxzybdnet-oss.github.io/ehon-kan/004.html".normalize('NFD') },
-  { "number": 5, "title": "005《６才のまんてんかかい》", "cover": "https://lh3.googleusercontent.com/d/1Wy0_wKSXG95Tyb_7bXqmvmayyPu6Tg8_", "link": "https://xxzybdnet-oss.github.io/ehon-kan/005.html".normalize('NFD') },
-  { "number": 6, "title": "006《初めてのおつかい》", "cover": "https://lh3.googleusercontent.com/d/1NgMR9hOrOjd1ziwTf8UvCQtlHkfgjGLR", "link": "https://xxzybdnet-oss.github.io/ehon-kan/006.html".normalize('NFD') },
-  { "number": 7, "title": "007《冰格曼卡拉》", "cover": "https://lh3.googleusercontent.com/d/1G8MZ-RN5qaock4Xvrwq7T4nuOIMpukBr", "link": "https://xxzybdnet-oss.github.io/ehon-kan/007.html".normalize('NFD') },
-  { "number": 8, "title": "008《子牛のいちにち》", "cover": "https://lh3.googleusercontent.com/d/1pT2vFCGPNhq0Z8tQOxRQTtYWky4ceA51", "link": "https://xxzybdnet-oss.github.io/ehon-kan/008.html".normalize('NFD') },
-  { "number": 9, "title": "009《はじめてのおかね》", "cover": "https://lh3.googleusercontent.com/d/1T3HwHB2KBDiCvHzMYtg4AQ8NEbeST_SX", "link": "https://xxzybdnet-oss.github.io/ehon-kan/009.html".normalize('NFD') },
-  { "number": 10, "title": "010《しずかな のう》", "cover": "https://lh3.googleusercontent.com/d/1wGr1Adwh640XWgVnzvCKTmz0cO37Njga", "link": "https://xxzybdnet-oss.github.io/ehon-kan/010.html".normalize('NFD') },
-  { "number": 11, "title": "011《ひとりでがっこうへ》", "cover": "https://lh3.googleusercontent.com/d/1qcxXI7hTgmDbHcGfGhU8X59Ya_q4ABeH", "link": "https://xxzybdnet-oss.github.io/ehon-kan/011.html".normalize('NFD') },
-  { "number": 12, "title": "012《よみあげられた きおく》", "cover": "https://lh3.googleusercontent.com/d/1VpY12nyHq50Os3LmfiG3QdggdaTaOWy7", "link": "https://xxzybdnet-oss.github.io/ehon-kan/012.html".normalize('NFD') },
-  { "number": 13, "title": "013《ちくちくことばが書いたにゅうよくざい》", "cover": "https://lh3.googleusercontent.com/d/1Lpx85fHs7pl09GGxgHn_jtdyyY6vXlOZ", "link": "https://xxzybdnet-oss.github.io/ehon-kan/013.html".normalize('NFD') },
-  
-  { "number": 14, "title": "014《はじめての せかい》", "cover": "", "page": 2, "link": "https://xxzybdnet-oss.github.io/ehon-kan/014.html".normalize('NFD') },
-  { "number": 15, "title": "015《迷った朝（早上の未解之谜）》", "cover": "", "page": 2, "link": "https://xxzybdnet-oss.github.io/ehon-kan/015.html".normalize('NFD') },
-  { "number": 16, "title": "016《あの日のバスケットきょうしつ》", "cover": "", "page": 2, "link": "https://xxzybdnet-oss.github.io/ehon-kan/016.html".normalize('NFD') },
-  
-  { "number": 17, "title": "017《ほうかごの きおく》", "cover": "https://lh3.googleusercontent.com/d/1vTlqMgz0iKG4V5tt9GaYGY6RNb9Pwm0g", "link": "https://xxzybdnet-oss.github.io/ehon-kan/017.html".normalize('NFD') },
-  { "number": 18, "title": "018《ふあんのなかであいしつづける》", "cover": "https://lh3.googleusercontent.com/d/1C9kQuTVn64Seib2tmDqOGecpynQvEtVY", "link": "https://xxzybdnet-oss.github.io/ehon-kan/018.html".normalize('NFD') },
-  { "number": 19, "title": "019《各自相遇的孩子们》", "cover": "https://lh3.googleusercontent.com/d/1Q2AqRCfffMkTUZ5OMSxn1XrJ5swXaGe9", "link": "https://xxzybdnet-oss.github.io/ehon-kan/019.html".normalize('NFD') },
-  { "number": 20, "title": "020《ママとぼくの本》", "cover": "https://lh3.googleusercontent.com/d/1gBpvHHk4MOlYEVwe9R9o8RPzxvzEGR4b", "link": "https://xxzybdnet-oss.github.io/ehon-kan/020.html".normalize('NFD') },
-  
-  { "number": 21, "title": "021《那时天还没亮》", "cover": "", "page": 1, "link": "https://xxzybdnet-oss.github.io/ehon-kan/021.html".normalize('NFD') },
-  { "number": 22, "title": "022《那台紫色相机》", "cover": "https://lh3.googleusercontent.com/d/17lhP14j9-RWwa-DJpK5NpA2qKtGAlNjW", "link": "https://xxzybdnet-oss.github.io/ehon-kan/022.html".normalize('NFD') },
-  { "number": 23, "title": "023《雪地里抱起的小白》", "cover": "", "page": 1, "link": "https://xxzybdnet-oss.github.io/ehon-kan/023.html".normalize('NFD') },
-  { "number": 24, "title": "024《やさしいぼくのここまで》", "cover": "", "page": 2, "link": "https://xxzybdnet-oss.github.io/ehon-kan/024.html".normalize('NFD') }
-];
+    { "number": 1, "title": "001《青のりゆう》", "cover": "https://lh3.googleusercontent.com/d/1TGHHXQw1r0y0rf0U63qwC8poFA15tZ3p", "link": "https://xxzybdnet-oss.github.io/ehon-kan/001.html".normalize('NFD') },
+    { "number": 2, "title": "002《石けんを食べるネズミ》", "cover": "https://lh3.googleusercontent.com/d/1uXBaSXPsrwJk8ATD5YfAJGcdIwEN6lfm", "link": "https://xxzybdnet-oss.github.io/ehon-kan/002.html".normalize('NFD') },
+    { "number": 3, "title": "003《生まれ変わるとり》", "cover": "https://lh3.googleusercontent.com/d/1zHD3eQFS0cjZMvEpNFJFrn-YR59aPf-Z", "link": "https://xxzybdnet-oss.github.io/ehon-kan/003.html".normalize('NFD') },
+    { "number": 4, "title": "004《３０万のねこちゃん》", "cover": "https://lh3.googleusercontent.com/d/1pAMDWxrFQCFhle2T10G_29nlnlPFhV7U", "link": "https://xxzybdnet-oss.github.io/ehon-kan/004.html".normalize('NFD') },
+    { "number": 5, "title": "005《６才のまんてんかかい》", "cover": "https://lh3.googleusercontent.com/d/1Wy0_wKSXG95Tyb_7bXqmvmayyPu6Tg8_", "link": "https://xxzybdnet-oss.github.io/ehon-kan/005.html".normalize('NFD') },
+    { "number": 6, "title": "006《初めてのおつかい》", "cover": "https://lh3.googleusercontent.com/d/1NgMR9hOrOjd1ziwTf8UvCQtlHkfgjGLR", "link": "https://xxzybdnet-oss.github.io/ehon-kan/006.html".normalize('NFD') },
+    { "number": 7, "title": "007《冰格曼卡拉》", "cover": "https://lh3.googleusercontent.com/d/1G8MZ-RN5qaock4Xvrwq7T4nuOIMpukBr", "link": "https://xxzybdnet-oss.github.io/ehon-kan/007.html".normalize('NFD') },
+    { "number": 8, "title": "008《子牛のいちにち》", "cover": "https://lh3.googleusercontent.com/d/1pT2vFCGPNhq0Z8tQOxRQTtYWky4ceA51", "link": "https://xxzybdnet-oss.github.io/ehon-kan/008.html".normalize('NFD') },
+    { "number": 9, "title": "009《はじめてのおかね》", "cover": "https://lh3.googleusercontent.com/d/1T3HwHB2KBDiCvHzMYtg4AQ8NEbeST_SX", "link": "https://xxzybdnet-oss.github.io/ehon-kan/009.html".normalize('NFD') },
+    { "number": 10, "title": "010《しずかな のう》", "cover": "https://lh3.googleusercontent.com/d/1wGr1Adwh640XWgVnzvCKTmz0cO37Njga", "link": "https://xxzybdnet-oss.github.io/ehon-kan/010.html".normalize('NFD') },
+    { "number": 11, "title": "011《ひとりでがっこうへ》", "cover": "https://lh3.googleusercontent.com/d/1qcxXI7hTgmDbHcGfGhU8X59Ya_q4ABeH", "link": "https://xxzybdnet-oss.github.io/ehon-kan/011.html".normalize('NFD') },
+    { "number": 12, "title": "012《よみあげられた きおく》", "cover": "https://lh3.googleusercontent.com/d/1VpY12nyHq50Os3LmfiG3QdggdaTaOWy7", "link": "https://xxzybdnet-oss.github.io/ehon-kan/012.html".normalize('NFD') },
+    { "number": 13, "title": "013《ちくちくことばが書いたにゅうよくざい》", "cover": "https://lh3.googleusercontent.com/d/1Lpx85fHs7pl09GGxgHn_jtdyyY6vXlOZ", "link": "https://xxzybdnet-oss.github.io/ehon-kan/013.html".normalize('NFD') },
+    { "number": 14, "title": "014《はじめての せかい》", "cover": "", "page": 2, "link": "https://xxzybdnet-oss.github.io/ehon-kan/014.html".normalize('NFD') },
+    { "number": 15, "title": "015《迷った朝（早上の未解之谜）》", "cover": "", "page": 2, "link": "https://xxzybdnet-oss.github.io/ehon-kan/015.html".normalize('NFD') },
+    { "number": 16, "title": "016《あの日のバスケットきょうしつ》", "cover": "", "page": 2, "link": "https://xxzybdnet-oss.github.io/ehon-kan/016.html".normalize('NFD') },
+    { "number": 17, "title": "017《ほうかごの きおく》", "cover": "https://lh3.googleusercontent.com/d/1vTlqMgz0iKG4V5tt9GaYGY6RNb9Pwm0g", "link": "https://xxzybdnet-oss.github.io/ehon-kan/017.html".normalize('NFD') },
+    { "number": 18, "title": "018《ふあんのなかであいしつづける》", "cover": "https://lh3.googleusercontent.com/d/1C9kQuTVn64Seib2tmDqOGecpynQvEtVY", "link": "https://xxzybdnet-oss.github.io/ehon-kan/018.html".normalize('NFD') },
+    { "number": 19, "title": "019《各自相遇的孩子们》", "cover": "https://lh3.googleusercontent.com/d/1Q2AqRCfffMkTUZ5OMSxn1XrJ5swXaGe9", "link": "https://xxzybdnet-oss.github.io/ehon-kan/019.html".normalize('NFD') },
+    { "number": 20, "title": "020《ママとぼくの本》", "cover": "https://lh3.googleusercontent.com/d/1gBpvHHk4MOlYEVwe9R9o8RPzxvzEGR4b", "link": "https://xxzybdnet-oss.github.io/ehon-kan/020.html".normalize('NFD') },
+    { "number": 21, "title": "021《那时天还没亮》", "cover": "", "page": 1, "link": "https://xxzybdnet-oss.github.io/ehon-kan/021.html".normalize('NFD') },
+    { "number": 22, "title": "022《那台紫色相机》", "cover": "https://lh3.googleusercontent.com/d/17lhP14j9-RWwa-DJpK5NpA2qKtGAlNjW", "link": "https://xxzybdnet-oss.github.io/ehon-kan/022.html".normalize('NFD') },
+    { "number": 23, "title": "023《雪地里抱起的小白》", "cover": "", "page": 1, "link": "https://xxzybdnet-oss.github.io/ehon-kan/023.html".normalize('NFD') },
+    { "number": 24, "title": "024《やさしいぼくのここまで》", "cover": "", "page": 2, "link": "https://xxzybdnet-oss.github.io/ehon-kan/024.html".normalize('NFD') }
+  ];
+
+  // 🔒 仅把截图里新增上传的 12 个草稿放入这里（登录后可见）
+  const draftBooks = [
+    { "number": 25, "title": "025（🚧 修正中）", "cover": "", "page": 1, "link": "https://xxzybdnet-oss.github.io/ehon-kan/025.html".normalize('NFD') },
+    { "number": 26, "title": "026（🚧 修正中）", "cover": "", "page": 1, "link": "https://xxzybdnet-oss.github.io/ehon-kan/026.html".normalize('NFD') },
+    { "number": 27, "title": "027（🚧 修正中）", "cover": "", "page": 1, "link": "https://xxzybdnet-oss.github.io/ehon-kan/027.html".normalize('NFD') },
+    { "number": 28, "title": "028（🚧 修正中）", "cover": "", "page": 1, "link": "https://xxzybdnet-oss.github.io/ehon-kan/028.html".normalize('NFD') },
+    { "number": 29, "title": "029（🚧 修正中）", "cover": "", "page": 1, "link": "https://xxzybdnet-oss.github.io/ehon-kan/029.html".normalize('NFD') },
+    { "number": 30, "title": "030（🚧 修正中）", "cover": "", "page": 1, "link": "https://xxzybdnet-oss.github.io/ehon-kan/030.html".normalize('NFD') },
+    { "number": 31, "title": "031（🚧 修正中）", "cover": "", "page": 1, "link": "https://xxzybdnet-oss.github.io/ehon-kan/031.html".normalize('NFD') },
+    { "number": 33, "title": "033（🚧 修正中）", "cover": "", "page": 1, "link": "https://xxzybdnet-oss.github.io/ehon-kan/033.html".normalize('NFD') },
+    { "number": 35, "title": "035（🚧 修正中）", "cover": "", "page": 1, "link": "https://xxzybdnet-oss.github.io/ehon-kan/035.html".normalize('NFD') },
+    { "number": 38, "title": "038（🚧 修正中）", "cover": "", "page": 1, "link": "https://xxzybdnet-oss.github.io/ehon-kan/038.html".normalize('NFD') },
+    { "number": 41, "title": "041（🚧 修正中）", "cover": "", "page": 1, "link": "https://xxzybdnet-oss.github.io/ehon-kan/041.html".normalize('NFD') },
+    { "number": 45, "title": "045（🚧 修正中）", "cover": "", "page": 1, "link": "https://xxzybdnet-oss.github.io/ehon-kan/045.html".normalize('NFD') }
+  ];
 
   async function fetchTargetImage(htmlUrl, pageNum = 1) {
     try {
@@ -461,13 +502,14 @@
         a.rel = 'noopener noreferrer';
       }
 
-      const imgId = `cover-img-${tagClass}-${book.number}`;
+      const currentTagClass = book.tagClass || tagClass;
+      const imgId = `cover-img-${currentTagClass}-${book.number}`;
       const customPos = book.objectPosition ? `style="object-position: ${book.objectPosition};"` : '';
 
       a.innerHTML = `
         <div class="book-card">
           <div class="cover-wrap">
-            <span class="vol-tag ${tagClass}">vol.${String(book.number).padStart(2,'0')}</span>
+            <span class="vol-tag ${currentTagClass}">vol.${String(book.number).padStart(2,'0')}</span>
             <img id="${imgId}" src="${book.cover || ''}" alt="${book.title}の表紙" loading="lazy" ${customPos}>
           </div>
         </div>
@@ -486,10 +528,48 @@
     });
   }
 
-  document.getElementById('statCount').textContent = newBooks.length + archiveBooks.length;
+  function initPage() {
+    const isAdmin = localStorage.getItem('ehonkan_admin_logged') === 'true';
+    document.getElementById('gridNew').innerHTML = '';
+    document.getElementById('gridArchive').innerHTML = '';
 
-  renderGrid('gridNew', newBooks);
-  renderGrid('gridArchive', archiveBooks, 'archive');
+    // 如果是管理员，将草稿打上 'draft' 独有样式并追加进列表
+    const activeArchives = isAdmin 
+      ? [...archiveBooks, ...draftBooks.map(b => ({ ...b, tagClass: 'archive draft' }))] 
+      : archiveBooks;
+
+    document.getElementById('statCount').textContent = newBooks.length + activeArchives.length;
+
+    renderGrid('gridNew', newBooks);
+    renderGrid('gridArchive', activeArchives, 'archive');
+
+    const loginBtn = document.getElementById('adminLoginBtn');
+    if (loginBtn) {
+      loginBtn.textContent = isAdmin ? '🔓 ログアウト (退出管理)' : '🔑 管理員ログイン';
+    }
+  }
+
+  // 🔑 管理员登录逻辑
+  document.getElementById('adminLoginBtn').addEventListener('click', function() {
+    const isAdmin = localStorage.getItem('ehonkan_admin_logged') === 'true';
+    if (isAdmin) {
+      localStorage.removeItem('ehonkan_admin_logged');
+      alert('已退出管理员模式');
+      initPage();
+    } else {
+      const input = prompt('请输入管理员密码:');
+      if (input === ADMIN_PASSWORD) {
+        localStorage.setItem('ehonkan_admin_logged', 'true');
+        alert('登录成功！已加载所有草稿绘本。');
+        initPage();
+      } else if (input !== null) {
+        alert('密码错误');
+      }
+    }
+  });
+
+  // 初始化页面
+  initPage();
 
   // 入场弹窗
   (function(){
