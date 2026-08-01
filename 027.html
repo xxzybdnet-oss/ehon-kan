@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>027早餐桌上的ドラえもん - せかい君への絵本集</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #EAE3D4;
+    --paper-deep: #DED4BF;
+    --ink: #26221C;
+    --indigo: #2B4570;
+    --indigo-deep: #1C2E4A;
+    --persimmon: #D96C3F;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin:0;
+    background:
+      radial-gradient(circle at 15% 6%, rgba(201,162,75,0.10), transparent 40%),
+      radial-gradient(circle at 85% 92%, rgba(43,69,112,0.08), transparent 45%),
+      var(--paper);
+    color: var(--ink);
+    font-family: 'Zen Kaku Gothic New', 'Hiragino Sans', sans-serif;
+  }
+
+  header {
+    text-align:center;
+    padding: 4.2rem 6vw 3rem;
+    border-bottom: 1px solid rgba(38,34,28,0.12);
+  }
+  .eyebrow {
+    font-size:0.75rem;
+    letter-spacing:0.32em;
+    color: var(--indigo);
+    text-transform: uppercase;
+    font-weight:700;
+    margin:0 0 1rem;
+  }
+  h1 {
+    font-family:'Shippori Mincho', serif;
+    font-weight:700;
+    font-size: clamp(2rem, 5.5vw, 3.4rem);
+    margin:0 0 0.6rem;
+  }
+  .sub {
+    color: rgba(38,34,28,0.6);
+    font-size:0.95rem;
+    margin:0;
+  }
+  .progress {
+    position: sticky;
+    top:0;
+    z-index: 5;
+    background: rgba(234,227,212,0.88);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid rgba(38,34,28,0.1);
+    padding: 0.55rem 0;
+    text-align:center;
+    font-size:0.72rem;
+    letter-spacing:0.1em;
+    color: var(--indigo-deep);
+  }
+  #progressFill {
+    color: var(--persimmon);
+    font-family:'Shippori Mincho', serif;
+    font-weight:700;
+  }
+
+  main {
+    max-width: clamp(360px, 78vw, 1200px);
+    margin: 0 auto;
+    padding: 3rem 5vw 6rem;
+    display:flex;
+    flex-direction: column;
+    gap: 3.4rem;
+  }
+
+  .page {
+    scroll-margin-top: 4rem;
+  }
+  .tag {
+    display:flex;
+    align-items:center;
+    gap:0.7rem;
+    margin-bottom:0.8rem;
+  }
+  .tag .num {
+    font-family:'Shippori Mincho', serif;
+    font-weight:700;
+    color: var(--persimmon);
+    font-size:1rem;
+    min-width: 2.4rem;
+  }
+  .tag .label {
+    font-size:0.82rem;
+    color: rgba(38,34,28,0.65);
+    letter-spacing:0.03em;
+  }
+  .frame {
+    border-radius: 6px;
+    overflow:hidden;
+    box-shadow:
+      0 14px 28px -16px rgba(28,46,74,0.4),
+      0 3px 8px rgba(28,46,74,0.15);
+    background: linear-gradient(160deg, var(--indigo), var(--indigo-deep));
+  }
+  .frame img {
+    width:100%;
+    display:block;
+  }
+
+  footer {
+    text-align:center;
+    padding: 3rem 6vw 4rem;
+    color: rgba(38,34,28,0.45);
+    font-size:0.78rem;
+    letter-spacing:0.04em;
+    border-top: 1px solid rgba(38,34,28,0.1);
+  }
+
+  #toTop {
+    position: fixed;
+    right: 1.4rem;
+    bottom: 1.4rem;
+    width: 2.6rem;
+    height: 2.6rem;
+    border-radius: 50%;
+    background: var(--indigo);
+    color: var(--paper);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-decoration:none;
+    font-size:1.1rem;
+    box-shadow: 0 8px 18px -6px rgba(28,46,74,0.5);
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    pointer-events: none;
+  }
+  #toTop.show { opacity:1; transform:translateY(0); pointer-events:auto; }
+</style>
+</head>
+<body>
+
+<div class="progress">
+  <span id="progressFill">1</span> / <span id="progressTotal">17</span> ページ
+</div>
+
+<header>
+  <p class="eyebrow">Picture Book</p>
+  <h1>027早餐桌上的ドラえもん</h1>
+  <p class="sub">せかい君への絵本集（全17ページ）</p>
+</header>
+
+<main id="main"></main>
+
+<footer id="siteFooter">© 2026 せかい君への絵本集</footer>
+
+<a href="#top" id="toTop" aria-label="トップへ戻る">↑</a>
+
+<script>
+  const pages = [
+  {
+    "type": "page",
+    "num": 1,
+    "caption": "027_1ページ",
+    "src": "https://lh3.googleusercontent.com/d/1ml5WoJt2NmgcxkPB68ptwB8o970z1vVz"
+  },
+  {
+    "type": "page",
+    "num": 2,
+    "caption": "027_2ページ",
+    "src": "https://lh3.googleusercontent.com/d/1_A8_quPCNIN_g8R-SOROKTGD50hs_NSm"
+  },
+  {
+    "type": "page",
+    "num": 3,
+    "caption": "027_3ページ",
+    "src": "https://lh3.googleusercontent.com/d/1OrRyqNazfaKgVfqEZV6l4Q_89jIowK3P"
+  },
+  {
+    "type": "page",
+    "num": 4,
+    "caption": "027_4ページ",
+    "src": "https://lh3.googleusercontent.com/d/1TuElm3gHOl5QOG8drSVySkMQP-VJR3hI"
+  },
+  {
+    "type": "page",
+    "num": 5,
+    "caption": "027_5ページ",
+    "src": "https://lh3.googleusercontent.com/d/1NCNSvFE3I6J7TEKItqglggCer-pdaHH3"
+  },
+  {
+    "type": "page",
+    "num": 6,
+    "caption": "027_6ページ",
+    "src": "https://lh3.googleusercontent.com/d/15RVhPWXucKZ0MOLiPHC2G-jOGeSAimkh"
+  },
+  {
+    "type": "page",
+    "num": 7,
+    "caption": "027_7ページ",
+    "src": "https://lh3.googleusercontent.com/d/1HzVjxP8CB9VwFfkv_of18yMhl6bi241M"
+  },
+  {
+    "type": "page",
+    "num": 8,
+    "caption": "027_8ページ",
+    "src": "https://lh3.googleusercontent.com/d/1bZ4J2VC674mkhDxPHgxSmb55hBfDclYU"
+  },
+  {
+    "type": "page",
+    "num": 9,
+    "caption": "027_9ページ",
+    "src": "https://lh3.googleusercontent.com/d/14IxQSuGrUC9bGgecQvL9FkQZT3sm9C0i"
+  },
+  {
+    "type": "page",
+    "num": 10,
+    "caption": "027_10ページ",
+    "src": "https://lh3.googleusercontent.com/d/1h6_8hPAwiOrlYUJNcQ4oF-UOD0d3fJXB"
+  },
+  {
+    "type": "page",
+    "num": 11,
+    "caption": "027_11ページ",
+    "src": "https://lh3.googleusercontent.com/d/1-93mttAWwpSj1CEc-AByhe6QZX8GanEU"
+  },
+  {
+    "type": "page",
+    "num": 12,
+    "caption": "027_12ページ",
+    "src": "https://lh3.googleusercontent.com/d/1TIF7Az4CAy43scv2VSoQ63f72U0Fr5y5"
+  },
+  {
+    "type": "page",
+    "num": 13,
+    "caption": "027_13ページ",
+    "src": "https://lh3.googleusercontent.com/d/1EDYOUGXPi8UgNypkO1NwdOvTRQMySHQm"
+  },
+  {
+    "type": "page",
+    "num": 14,
+    "caption": "027_14ページ",
+    "src": "https://lh3.googleusercontent.com/d/1sVnyDMS8K3vvJGdfVsRF0HAzmPw0-ux0"
+  },
+  {
+    "type": "page",
+    "num": 15,
+    "caption": "027_15ページ",
+    "src": "https://lh3.googleusercontent.com/d/1z2gj819ACbHjO1TGMNNiAz-6dOy8nbbY"
+  },
+  {
+    "type": "page",
+    "num": 16,
+    "caption": "027_16ページ",
+    "src": "https://lh3.googleusercontent.com/d/1cjHTdqWIC7yj8fU13dpCbpjNnSCOoBIX"
+  },
+  {
+    "type": "page",
+    "num": 17,
+    "caption": "027_17ページ",
+    "src": "https://lh3.googleusercontent.com/d/1wgJhbqp4jZT1i5IgjMejGqDcRO5tb1jY"
+  }
+];
+
+  const main = document.getElementById('main');
+
+  pages.forEach((p, i) => {
+    const sec = document.createElement('section');
+    sec.className = 'page';
+    if (i === 0) sec.id = 'top';
+
+    const labelText = `📖 P${p.num}` + (p.caption ? ' ' + p.caption : '');
+    const numLabel = String(p.num).padStart(2, '0');
+
+    sec.innerHTML = `
+      <div class="tag"><span class="num">${numLabel}</span><span class="label">${labelText}</span></div>
+      <div class="frame"><img src="${p.src}" alt="${labelText}" loading="lazy"></div>
+    `;
+    main.appendChild(sec);
+  });
+
+  document.getElementById('progressTotal').textContent = pages.length;
+
+  const sections = Array.from(document.querySelectorAll('.page'));
+  const progressFill = document.getElementById('progressFill');
+  const toTop = document.getElementById('toTop');
+
+  function updateProgress(){
+    let current = 1;
+    for (let i = 0; i < sections.length; i++){
+      const rect = sections[i].getBoundingClientRect();
+      if (rect.top < window.innerHeight * 0.5) current = i + 1;
+    }
+    progressFill.textContent = current;
+    toTop.classList.toggle('show', window.scrollY > 400);
+  }
+  document.addEventListener('scroll', updateProgress, { passive: true });
+  updateProgress();
+</script>
+
+</body>
+</html>
