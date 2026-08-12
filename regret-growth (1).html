@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>後悔、もまた成長</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper: #EAE3D4;
+    --paper-deep: #DED4BF;
+    --ink: #26221C;
+    --indigo: #2B4570;
+    --indigo-deep: #1C2E4A;
+    --persimmon: #D96C3F;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body{
+    margin:0;
+    background:
+      radial-gradient(circle at 15% 6%, rgba(201,162,75,0.10), transparent 40%),
+      radial-gradient(circle at 85% 92%, rgba(43,69,112,0.08), transparent 45%),
+      var(--paper);
+    color: var(--ink);
+    font-family: 'Zen Kaku Gothic New', 'Hiragino Sans', sans-serif;
+  }
+
+  header{
+    text-align:center;
+    padding: 4.2rem 6vw 3rem;
+    border-bottom: 1px solid rgba(38,34,28,0.12);
+  }
+  .eyebrow{
+    font-size:0.75rem;
+    letter-spacing:0.32em;
+    color: var(--indigo);
+    text-transform: uppercase;
+    font-weight:700;
+    margin:0 0 1rem;
+  }
+  h1{
+    font-family:'Shippori Mincho', serif;
+    font-weight:700;
+    font-size: clamp(2rem, 5.5vw, 3.4rem);
+    margin:0 0 0.6rem;
+  }
+  .sub{
+    color: rgba(38,34,28,0.6);
+    font-size:0.95rem;
+    margin:0;
+  }
+  .progress{
+    position: sticky;
+    top:0;
+    z-index: 5;
+    background: rgba(234,227,212,0.88);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid rgba(38,34,28,0.1);
+    padding: 0.55rem 0;
+    text-align:center;
+    font-size:0.72rem;
+    letter-spacing:0.1em;
+    color: var(--indigo-deep);
+  }
+  #progressFill{
+    color: var(--persimmon);
+    font-family:'Shippori Mincho', serif;
+    font-weight:700;
+  }
+
+  main{
+    max-width: clamp(360px, 78vw, 1200px);
+    margin: 0 auto;
+    padding: 3rem 5vw 6rem;
+    display:flex;
+    flex-direction: column;
+    gap: 3.4rem;
+  }
+
+  .page{
+    scroll-margin-top: 4rem;
+  }
+  .tag{
+    display:flex;
+    align-items:center;
+    gap:0.7rem;
+    margin-bottom:0.8rem;
+  }
+  .tag .num{
+    font-family:'Shippori Mincho', serif;
+    font-weight:700;
+    color: var(--persimmon);
+    font-size:1rem;
+    min-width: 2.4rem;
+  }
+  .tag .label{
+    font-size:0.82rem;
+    color: rgba(38,34,28,0.65);
+    letter-spacing:0.03em;
+  }
+  .frame{
+    border-radius: 6px;
+    overflow:hidden;
+    box-shadow:
+      0 14px 28px -16px rgba(28,46,74,0.4),
+      0 3px 8px rgba(28,46,74,0.15);
+    background: linear-gradient(160deg, var(--indigo), var(--indigo-deep));
+  }
+  .frame img{
+    width:100%;
+    display:block;
+  }
+  .cover .frame{
+    box-shadow:
+      0 22px 40px -18px rgba(28,46,74,0.5),
+      0 4px 10px rgba(28,46,74,0.2);
+  }
+  .cover .tag .label, .backcover .tag .label{
+    color: var(--indigo-deep);
+    font-weight:700;
+  }
+  .backcover .frame img{
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    object-position: top;
+  }
+  .story-text{
+    margin-top: 1rem;
+    font-size: 0.92rem;
+    line-height: 2;
+    color: rgba(38,34,28,0.8);
+    background: var(--paper-deep);
+    border-radius: 6px;
+    padding: 1.1rem 1.3rem;
+    white-space: pre-line;
+  }
+
+  footer{
+    text-align:center;
+    padding: 3rem 6vw 4rem;
+    color: rgba(38,34,28,0.45);
+    font-size:0.78rem;
+    letter-spacing:0.04em;
+    border-top: 1px solid rgba(38,34,28,0.1);
+  }
+
+  #toTop{
+    position: fixed;
+    right: 1.4rem;
+    bottom: 1.4rem;
+    width: 2.6rem;
+    height: 2.6rem;
+    border-radius: 50%;
+    background: var(--indigo);
+    color: var(--paper);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-decoration:none;
+    font-size:1.1rem;
+    box-shadow: 0 8px 18px -6px rgba(28,46,74,0.5);
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    pointer-events: none;
+  }
+  #toTop.show{ opacity:1; transform:translateY(0); pointer-events:auto; }
+</style>
+</head>
+<body>
+
+<div class="progress">
+  <span id="progressFill">0</span> / <span id="progressTotal">0</span> ページ
+</div>
+
+<header>
+  <p class="eyebrow">Picture Book</p>
+  <h1>後悔、もまた成長</h1>
+  <p class="sub">せかい君とママの物語</p>
+</header>
+
+<main id="main"></main>
+
+<footer id="siteFooter">© 2026 せかい君とママの世界</footer>
+
+<a href="#top" id="toTop" aria-label="トップへ戻る">↑</a>
+
+<script>
+  const pages = [
+    {
+        "type": "cover",
+        "caption": "表紙",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/55936696/1785497980979_55936696_pZK3T.png"
+    },
+    {
+        "type": "page",
+        "num": 1,
+        "caption": "夜の家のはじまり（開場）",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/55936696/1785133826047_55936696_UKQVw.png",
+        "story": "七月の夜。\nママは西瓜を買いに行くことにした。\nせかい君は「家で待つ」と、少し誇らしげに言った。"
+    },
+    {
+        "type": "page",
+        "num": 2,
+        "caption": "三階の小さな世界",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/55936696/1785134126836_55936696_fpNFx.png",
+        "story": "三階のベッドの上。\nせかい君は、ママのスマホで\nボール転がしゲームに夢中になっていた。"
+    },
+    {
+        "type": "page",
+        "num": 3,
+        "caption": "静けさの違和感",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/55936696/1785136348469_55936696_gSbh4.png",
+        "story": "ふと、静かになった。\nゲームの音より、\n家の静けさのほうが大きく感じた。"
+    },
+    {
+        "type": "page",
+        "num": 4,
+        "caption": "「やっぱり行きたい」の瞬間",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/55936696/1785136350937_55936696_Ehk6E.png",
+        "story": "胸の奥がざわっとした。\n「やっぱり…一緒に行きたい」\nその気持ちが、はっきり形になった。"
+    },
+    {
+        "type": "page",
+        "num": 5,
+        "caption": "三階から一階へ（下降のカット）",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/55936696/1785136256734_55936696_8W8o9.png",
+        "story": "せかい君は階段をかけおりた。\n裸足の足音が、家の中に響いた。"
+    },
+    {
+        "type": "page",
+        "num": 6,
+        "caption": "玄関の外へ",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/55936696/1785203278668_55936696_HRYJL.png",
+        "story": "玄関を出ると、夜風が少し冷たかった。\n手には、通知を送れる白いGPSの小箱。\n「これで、ママの場所がわかるはず…」"
+    },
+    {
+        "type": "page",
+        "num": 7,
+        "caption": "通知は届くけれど、姿は見えない",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/55856026/1786147969747_55856026_MLQ0s.png",
+        "story": "通知は送れる。\nでも、画面はない。\nママの姿も見えない。\n胸の奥が、ぎゅっとした。"
+    },
+    {
+        "type": "page",
+        "num": 8,
+        "caption": "追いつけない気持ち",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/55936696/1785208074056_55936696_BoRud.png",
+        "story": "「もう追いつけない…」\nその思いが涙を呼んだ。\nせかい君は、静かに泣いた。"
+    },
+    {
+        "type": "page",
+        "num": 9,
+        "caption": "ママが帰ってきた",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/55856026/1786067209835_55856026_PwzzM.png",
+        "story": "玄関のドアが開いた。\nせかい君は、赤い目で走ってきた。"
+    },
+    {
+        "type": "page",
+        "num": 10,
+        "caption": "涙の理由",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/55936696/1785208044637_55936696_vxCaL.png",
+        "story": "「僕は…泣いた。」\nその声は、小さくて、でもまっすぐだった。"
+    },
+    {
+        "type": "page",
+        "num": 11,
+        "caption": "「後悔した」の告白",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/55936696/1785283722509_55936696_AoCvl.png",
+        "story": "「出かけたあと…やっぱり行きたくなった。\nだから…後悔した。」\nせかい君は、自分の気持ちを言葉にした。"
+    },
+    {
+        "type": "page",
+        "num": 12,
+        "caption": "ママの受け止め",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/55936696/1785283725324_55936696_oLm1D.png",
+        "story": "ママは、ただ優しくうなずいた。\n「教えてくれて、ありがとう。」\nその言葉が、涙を静かに止めた。"
+    },
+    {
+        "type": "page",
+        "num": 13,
+        "caption": "次のための約束",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/55936696/1785497690656_55936696_v0pZZ.png",
+        "story": "「これからは、家に『電話できるスマホ』を置こう。\n気持ちが変わったら、すぐ連絡できるように。」\nせかい君は、しっかりとうなずいた。"
+    },
+    {
+        "type": "page",
+        "num": 14,
+        "caption": "感情のしめくくり",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/55856026/1786147968519_55856026_hD8Qa.png",
+        "story": "「もう大丈夫？」\n返事のかわりに、\nせかい君はそっとママにキスをした。"
+    },
+    {
+        "type": "page",
+        "num": 15,
+        "caption": "夜の台所",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/55936696/1785283723907_55936696_EKD2W.png",
+        "story": "後悔は、悪いことじゃない。\n自分の気持ちを知るための\n大切なステップだ。"
+    },
+    {
+        "type": "page",
+        "num": 16,
+        "caption": "成長のかたち（結尾）",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/55936696/1785283728825_55936696_EWfhm.png",
+        "story": "気持ちを言葉にできたとき、\n人は少し大きくなる。\nせかい君は、その一歩を\nしっかり踏み出した。\nおしまい。"
+    },
+    {
+        "type": "back",
+        "caption": "裏表紙",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/55856026/1785893257031_55856026_cL4pO.png"
+    }
+];
+
+  const main = document.getElementById('main');
+
+  pages.forEach((p, i) => {
+    const sec = document.createElement('section');
+    sec.className = 'page' + (p.type === 'cover' ? ' cover' : p.type === 'back' ? ' backcover' : '');
+    if (i === 0) sec.id = 'top';
+
+    let labelText;
+    if (p.type === 'cover') labelText = '\\ud83c\\udf1f 表紙' + (p.caption ? ' ' + p.caption : '');
+    else if (p.type === 'back') labelText = '\\ud83c\\udf1f 裏表紙' + (p.caption ? ' ' + p.caption : '');
+    else labelText = `\\ud83d\\udcd6 P${p.num}` + (p.caption ? ' ' + p.caption : '');
+
+    const numLabel = p.type === 'page' ? String(p.num).padStart(2, '0') : (p.type === 'cover' ? '★' : '☆');
+
+    const storyHtml = p.story ? `<div class="story-text">${p.story}</div>` : '';
+
+    sec.innerHTML = `
+      <div class="tag"><span class="num">${numLabel}</span><span class="label">${labelText}</span></div>
+      <div class="frame"><img src="${p.src}" alt="${labelText}" loading="lazy"></div>
+      ${storyHtml}
+    `;
+    main.appendChild(sec);
+  });
+
+  document.getElementById('progressTotal').textContent = pages.length;
+
+  const sections = Array.from(document.querySelectorAll('.page'));
+  const progressFill = document.getElementById('progressFill');
+  const toTop = document.getElementById('toTop');
+
+  function updateProgress(){
+    let current = 1;
+    for (let i = 0; i < sections.length; i++){
+      const rect = sections[i].getBoundingClientRect();
+      if (rect.top < window.innerHeight * 0.5) current = i + 1;
+    }
+    progressFill.textContent = current;
+    toTop.classList.toggle('show', window.scrollY > 400);
+  }
+  document.addEventListener('scroll', updateProgress, { passive: true });
+  updateProgress();
+</script>
+
+</body>
+</html>

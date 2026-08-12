@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>あさごはんのドラえもん - せかい君への絵本集</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #EAE3D4;
+    --paper-deep: #DED4BF;
+    --ink: #26221C;
+    --indigo: #2B4570;
+    --indigo-deep: #1C2E4A;
+    --persimmon: #D96C3F;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin:0;
+    background:
+      radial-gradient(circle at 15% 6%, rgba(201,162,75,0.10), transparent 40%),
+      radial-gradient(circle at 85% 92%, rgba(43,69,112,0.08), transparent 45%),
+      var(--paper);
+    color: var(--ink);
+    font-family: 'Zen Kaku Gothic New', 'Hiragino Sans', sans-serif;
+  }
+
+  header {
+    text-align:center;
+    padding: 4.2rem 6vw 3rem;
+    border-bottom: 1px solid rgba(38,34,28,0.12);
+  }
+  .eyebrow {
+    font-size:0.75rem;
+    letter-spacing:0.32em;
+    color: var(--indigo);
+    text-transform: uppercase;
+    font-weight:700;
+    margin:0 0 1rem;
+  }
+  h1 {
+    font-family:'Shippori Mincho', serif;
+    font-weight:700;
+    font-size: clamp(2rem, 5.5vw, 3.4rem);
+    margin:0 0 0.6rem;
+  }
+  .sub {
+    color: rgba(38,34,28,0.6);
+    font-size:0.95rem;
+    margin:0;
+  }
+  .progress {
+    position: sticky;
+    top:0;
+    z-index: 5;
+    background: rgba(234,227,212,0.88);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid rgba(38,34,28,0.1);
+    padding: 0.55rem 0;
+    text-align:center;
+    font-size:0.72rem;
+    letter-spacing:0.1em;
+    color: var(--indigo-deep);
+  }
+  #progressFill {
+    color: var(--persimmon);
+    font-family:'Shippori Mincho', serif;
+    font-weight:700;
+  }
+
+  main {
+    max-width: clamp(360px, 78vw, 1200px);
+    margin: 0 auto;
+    padding: 3rem 5vw 6rem;
+    display:flex;
+    flex-direction: column;
+    gap: 3.4rem;
+  }
+
+  .page {
+    scroll-margin-top: 4rem;
+  }
+  .tag {
+    display:flex;
+    align-items:center;
+    gap:0.7rem;
+    margin-bottom:0.8rem;
+  }
+  .tag .num {
+    font-family:'Shippori Mincho', serif;
+    font-weight:700;
+    color: var(--persimmon);
+    font-size:1rem;
+    min-width: 2.4rem;
+  }
+  .tag .label {
+    font-size:0.82rem;
+    color: rgba(38,34,28,0.65);
+    letter-spacing:0.03em;
+  }
+  .frame {
+    border-radius: 6px;
+    overflow:hidden;
+    box-shadow:
+      0 14px 28px -16px rgba(28,46,74,0.4),
+      0 3px 8px rgba(28,46,74,0.15);
+    background: linear-gradient(160deg, var(--indigo), var(--indigo-deep));
+  }
+
+  .frame.landscape {
+    aspect-ratio: 2 / 1;
+    width: 100%;
+  }
+
+  .frame.landscape img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .frame img {
+    width:100%;
+    display:block;
+  }
+
+  footer {
+    text-align:center;
+    padding: 3rem 6vw 4rem;
+    color: rgba(38,34,28,0.45);
+    font-size:0.78rem;
+    letter-spacing:0.04em;
+    border-top: 1px solid rgba(38,34,28,0.1);
+  }
+
+  #toTop {
+    position: fixed;
+    right: 1.4rem;
+    bottom: 1.4rem;
+    width: 2.6rem;
+    height: 2.6rem;
+    border-radius: 50%;
+    background: var(--indigo);
+    color: var(--paper);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-decoration:none;
+    font-size:1.1rem;
+    box-shadow: 0 8px 18px -6px rgba(28,46,74,0.5);
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    pointer-events: none;
+  }
+  #toTop.show { opacity:1; transform:translateY(0); pointer-events:auto; }
+</style>
+</head>
+<body>
+
+<div class="progress">
+  <span id="progressFill">1</span> / <span id="progressTotal">18</span> ページ
+</div>
+
+<header>
+  <p class="eyebrow">Picture Book</p>
+  <h1>あさごはんのドラえもん</h1>
+  <p class="sub">せかい君への絵本集（全18ページ）</p>
+</header>
+
+<main id="main"></main>
+
+<footer id="siteFooter">© 2026 せかい君への絵本集</footer>
+
+<a href="#top" id="toTop" aria-label="トップへ戻る">↑</a>
+
+<script>
+  const pages = [
+    {
+        "type": "cover",
+        "num": 1,
+        "caption": "表紙",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/56366033/1786330694254_56366033_e3KcC.png"
+    },
+    {
+        "type": "page",
+        "num": 2,
+        "caption": "朝の食卓とゲームのはじまり",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/56366033/1786069209337_56366033_KnwBQ.png"
+    },
+    {
+        "type": "page",
+        "num": 3,
+        "caption": "パン・ラジオ・コーヒー",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/56366033/1786072342140_56366033_0Yydq.png"
+    },
+    {
+        "type": "page",
+        "num": 4,
+        "caption": "コアラ君！",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/56366033/1786072345537_56366033_q2QV5.png"
+    },
+    {
+        "type": "page",
+        "num": 5,
+        "caption": "むずかしい問題・コップ事件",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/56366033/1786332554553_56366033_YhbbJ.png"
+    },
+    {
+        "type": "page",
+        "num": 6,
+        "caption": "智能手环 → 腕時計",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/56366033/1786148181561_56366033_ax0DA.png"
+    },
+    {
+        "type": "page",
+        "num": 7,
+        "caption": "スマートウォッチとウォッチの説明",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/56366033/1786408304851_56366033_tO0SI.png"
+    },
+    {
+        "type": "page",
+        "num": 8,
+        "caption": "スマートなものたち",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/56366033/1786408303519_56366033_f6TRt.png"
+    },
+    {
+        "type": "page",
+        "num": 9,
+        "caption": "ロボットの想像",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/56366033/1786148178950_56366033_7BtVX.png"
+    },
+    {
+        "type": "page",
+        "num": 10,
+        "caption": "ロボットの想像②",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/56366033/1786406061328_56366033_9CCXc.png"
+    },
+    {
+        "type": "page",
+        "num": 11,
+        "caption": "もし本当にドラえもんがいたら",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/56366033/1786406381563_56366033_iSepf.png"
+    },
+    {
+        "type": "page",
+        "num": 12,
+        "caption": "依存と成長",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/56366033/1786234118751_56366033_Bmxl8.png"
+    },
+    {
+        "type": "page",
+        "num": 13,
+        "caption": "せかい君の答え",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/56366033/1786234125632_56366033_fSB0k.png"
+    },
+    {
+        "type": "page",
+        "num": 14,
+        "caption": "ミニドラの回を思い出す",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/56366033/1786406065356_56366033_84ntP.png"
+    },
+    {
+        "type": "page",
+        "num": 15,
+        "caption": "母の気づき",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/56366033/1786234123050_56366033_3eaLh.png"
+    },
+    {
+        "type": "page",
+        "num": 16,
+        "caption": "玄関での別れ",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/56366033/1786330559831_56366033_hnAG0.png"
+    },
+    {
+        "type": "page",
+        "num": 17,
+        "caption": "小さな背中と残る言葉",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/56366033/1786330563134_56366033_hgElf.png"
+    },
+    {
+        "type": "cover",
+        "num": 18,
+        "caption": "裏表紙",
+        "src": "https://cdn.pagepop.top/gcs/ai/gpt_image2/56366033/1786330543063_56366033_deV30.png"
+    }
+];
+
+  const main = document.getElementById('main');
+
+  pages.forEach((p, i) => {
+    const sec = document.createElement('section');
+    sec.className = 'page';
+    if (i === 0) sec.id = 'top';
+
+    const labelText = `\\ud83d\\udcd6 P${p.num}` + (p.caption ? ' ' + p.caption : '');
+    const numLabel = String(p.num).padStart(2, '0');
+
+    const frameClass = (p.type === 'cover') ? 'frame' : 'frame landscape';
+
+    sec.innerHTML = `
+      <div class="tag"><span class="num">${numLabel}</span><span class="label">${labelText}</span></div>
+      <div class="${frameClass}"><img src="${p.src}" alt="${labelText}" loading="lazy"></div>
+    `;
+    main.appendChild(sec);
+  });
+
+  document.getElementById('progressTotal').textContent = pages.length;
+
+  const sections = Array.from(document.querySelectorAll('.page'));
+  const progressFill = document.getElementById('progressFill');
+  const toTop = document.getElementById('toTop');
+
+  function updateProgress(){
+    let current = 1;
+    for (let i = 0; i < sections.length; i++){
+      const rect = sections[i].getBoundingClientRect();
+      if (rect.top < window.innerHeight * 0.5) current = i + 1;
+    }
+    progressFill.textContent = current;
+    toTop.classList.toggle('show', window.scrollY > 400);
+  }
+  document.addEventListener('scroll', updateProgress, { passive: true });
+  updateProgress();
+</script>
+
+</body>
+</html>
