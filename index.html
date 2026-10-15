@@ -453,7 +453,10 @@
     { number: 44, title: "パパがつくったこどもベッド", cover: "https://lh3.googleusercontent.com/d/1D0JgzWvPudUovKjOAGks1TGwQzOCgE1n", link: "https://xxzybdnet-oss.github.io/ehon-kan/papa-kodomo-bed-picture-book.html" },
     { number: 45, title: "絵本を読まなかった夜", cover: "https://lh3.googleusercontent.com/d/11AuZEv9ntJ9DdGDh93wBUol2gSfNo2Gv", link: "https://xxzybdnet-oss.github.io/ehon-kan/ehon-yomanakatta-yoru-picture-book.html" },
     { number: 46, title: "青い宇宙とまるい責任", cover: "https://lh3.googleusercontent.com/d/1L4NEACAZf3LZmYXZOqtg3k136A8kYevX", link: "https://xxzybdnet-oss.github.io/ehon-kan/aoi-uchuu-to-marui-sekinin-picture-book.html" },
-    { number: 47, title: "新幹線の青い傘でママを迎えに", cover: "https://lh3.googleusercontent.com/d/1M_vLp9OVo6FZIrpl7_hvi7YV3p4LM4bq", link: "https://xxzybdnet-oss.github.io/ehon-kan/shinkansen-no-aoi-kasa-picture-book.html" }
+    { number: 47, title: "新幹線の青い傘でママを迎えに", cover: "https://lh3.googleusercontent.com/d/1M_vLp9OVo6FZIrpl7_hvi7YV3p4LM4bq", link: "https://xxzybdnet-oss.github.io/ehon-kan/shinkansen-no-aoi-kasa-picture-book.html" },
+    { number: 48, title: "今日はぼくが案内する", cover: "https://lh3.googleusercontent.com/d/1z1PrbyiDjMI4ssHC3k3koXarnEoeo6Tr", link: "https://xxzybdnet-oss.github.io/ehon-kan/kyou-wa-boku-ga-annai-suru-picture-book.html" },
+    { number: 49, title: "小エビをさがしに行ったのに", cover: "https://lh3.googleusercontent.com/d/1corMJUk3V6ih7NWTqSybzrfbhNBIheMQ", link: "https://xxzybdnet-oss.github.io/ehon-kan/ko-ebi-wo-sagashi-ni-itta-noni-picture-book.html" },
+    { number: 50, title: "三連休は 江の島じゃなくて コーナンでした", cover: "https://lh3.googleusercontent.com/d/10HhtBroi8M169A1xVmPpr1T___flqIBj", link: "https://xxzybdnet-oss.github.io/ehon-kan/sanrenkyuu-konan-picture-book.html" }
    
    ];
 
@@ -570,7 +573,7 @@
 
     document.getElementById('statCount').textContent = newBooks.length + activeArchives.length;
 
-    renderGrid('gridNew', newBooks);
+    renderGrid('gridNew', [...newBooks].reverse()); // 最新が先頭（newBooks は古い順のまま末尾に追記すればOK）
     renderGrid('gridArchive', activeArchives, 'archive');
 
     const loginBtn = document.getElementById('adminLoginBtn');
